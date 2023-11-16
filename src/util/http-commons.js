@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const { VITE_VUE_API_URL } = import.meta.env;
+const { VITE_VUE_API_URL, VITE_SIDO_GUGUN_DONG_URL } = import.meta.env;
 
 // local vue api axios instance
 function localAxios() {
@@ -24,4 +24,15 @@ function publicDataAxios() {
   return instance;
 }
 
-export { localAxios, publicDataAxios };
+// 시도구군동 정보 얻어오는 axios 객체
+function sidoGugunDongAxios() {
+  const instance = axios.create({
+    baseURL: VITE_SIDO_GUGUN_DONG_URL,
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+    },
+  });
+  return instance;
+}
+
+export { localAxios, publicDataAxios, sidoGugunDongAxios };
