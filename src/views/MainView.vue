@@ -6,7 +6,7 @@
     <main
       class="container border col-10 p-5 d-flex flex-column justify-content-center">
       <div class="d-flex justify-content-evenly">
-        <a href="#" class="text-decoration-none text-dark">
+        <RouterLink :to="{name : 'apt-deal' }" href="#" class="text-decoration-none text-dark">
           <div class="select-menu d-flex flex-column fw-bold fs-2 shadow">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -22,7 +22,7 @@
             </svg>
             <br />
             아파트
-          </div></a
+          </div></RouterLink
         >
         <a href="#" class="text-decoration-none text-dark">
           <div class="select-menu fw-bold fs-2 d-flex flex-column shadow">

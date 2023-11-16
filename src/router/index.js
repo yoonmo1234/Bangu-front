@@ -13,10 +13,10 @@ const router = createRouter({
       name: "board",
       component: () => import("../views/TheBoardView.vue"),
       redirect: { name: "article-list" },
-      children : [
+      children: [
         {
-          path:"list",
-          name:"article-list",
+          path: "list",
+          name: "article-list",
           component: () => import("@/components/board/BoardList.vue"),
         },
         {
@@ -35,7 +35,12 @@ const router = createRouter({
           component: () => import("@/components/board/BoardModify.vue"),
         },
       ]
-    }
+    },
+    {
+      path: "/apt-deal",
+      name: "apt-deal",
+      component: import("@/views/AptDealView.vue"),
+    },
   ]
 });
 
