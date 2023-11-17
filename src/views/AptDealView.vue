@@ -18,6 +18,7 @@ onMounted(() => {
     getSidoList();
 })
 
+// 시도 얻기
 const getSidoList = () => {
     listSido(
         ({ data }) => {
@@ -44,24 +45,15 @@ watch(selected, (oldProp, newProp) => {
 <template>
     <v-card class="tmp" style="width:400px">
         <v-card-actions>
-            <!-- <v-select
-    :items="sidoList"
-    item-title="text"
-    item-value="value"
-    label="시도선택"
-    persistent-hint
-    return-object
-    single-line
-  ></v-select> -->
-            <!-- <v-select label="시도선택" :items="sidoList"
+            <v-select v-model="selected.sido" label="시도선택" :items="sidoList"
                 :item-title="'text'"
                 :item-value="'value'"
                 variant="solo-filled"></v-select>
             <v-select label="Select" :items="['California', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wyoming']"
                 variant="solo-filled"></v-select>
             <v-select label="Select" :items="['California', 'Colorado', 'Florida', 'Georgia', 'Texas', 'Wyoming']"
-                variant="solo-filled"></v-select> -->
-    <select v-model="selected.sido" name="asdf" id="asdf">
+                variant="solo-filled"></v-select>
+    <!-- <select v-model="selected.sido" name="asdf" id="asdf">
         <option  v-for="(list) in sidoList" :key="list.value" :value="list.value">{{ list.text }}</option>
     </select>
     <select name="asdf" id="asdf">
@@ -69,7 +61,7 @@ watch(selected, (oldProp, newProp) => {
     </select>
     <select name="asdf" id="asdf">
         <option v-for="(list) in sidoList" :key="list.value" :value="list.value">{{ list.text }}</option>
-    </select>
+    </select> -->
         </v-card-actions>
     </v-card>
     <VKakaoMap />
