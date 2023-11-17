@@ -3,6 +3,10 @@ import { sidoGugunDongAxios } from "../util/http-commons";
 // axios 객체
 const sidoGugunDong = sidoGugunDongAxios();
 
+let basicParam = {
+    regcode_pattern:"",
+    is_ignore_zero:true,
+}
 // 대한민국 시도 데이터를 가져와주는 api
 function listSido(success, fail) {
     let param = {
