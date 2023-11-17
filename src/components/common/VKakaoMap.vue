@@ -37,21 +37,24 @@ onMounted(() => {
 //   { deep: true }
 // );
 
-// watch(
-//   () => props.selectStation.value,
-//   () => {
-//     // 이동할 위도 경도 위치를 생성합니다
-//     var moveLatLon = new kakao.maps.LatLng(
-//       props.selectStation.lat,
-//       props.selectStation.lng
-//     );
+watch(
+  () => props.selectStation.value,
+  () => {
+    // 이동할 위도 경도 위치를 생성합니다
+    var moveLatLon = new kakao.maps.LatLng(
+      props.selectStation.lat,
+      props.selectStation.lng
+    );
+    console.log("moveLatLon : ", moveLatLon);
 
-//     // 지도 중심을 부드럽게 이동시킵니다
-//     // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
-//     map.panTo(moveLatLon);
-//   },
-//   { deep: true }
-// );
+    // 지도 중심을 부드럽게 이동시킵니다
+    // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
+    // map.panTo(moveLatLon);
+    console.log("map : ",map);
+    map.setCenter(moveLatLon);
+  },
+  { deep: true }
+);
 
 const initMap = () => {
   const container = document.getElementById("map");
@@ -111,6 +114,6 @@ const deleteMarkers = () => {
 <style>
 #map {
   width: 100%;
-  height: 100vh;
+  height: 800px;
 }
 </style>

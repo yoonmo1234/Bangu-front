@@ -2,6 +2,7 @@
 import VKakaoMap from '../components/common/VKakaoMap.vue';
 import { ref, onMounted, watch } from "vue";
 import { getAddress } from "@/api/sido";
+import VSelect from "@/components/common/VSelect.vue";
 
 const sidoList = ref([]);
 const gugunList = ref([{ text: "구군선택", value: "" }]);
@@ -13,9 +14,11 @@ const dongList = ref([{ text: "법정동선택", value: "" }]);
 //     gugun: "",
 //     dong: "",
 // });
-const selectedSido = ref("");
-const selectedGugun = ref("");
-const selectedDong = ref("");
+const selectedSido = ref({text:"",code:""});
+const selectedGugun = ref({text:"",code:""});
+const selectedDong =  ref({text:"",code:""});
+
+const currentLocation = ref({});
 
 
 onMounted(() => {
@@ -30,7 +33,7 @@ const getSidoList = () => {
             is_ignore_zero: true,
         },
         ({ data }) => {
-            console.log(data.regcodes);
+            // console.log(data.regcodes);
             let options = [];
             options.push({ text: "시도선택", value: "" });
             data.regcodes.forEach((sido) => {
@@ -43,16 +46,17 @@ const getSidoList = () => {
         }
     )
 }
-const sidoChange = (code) => {
-    selectedSido.value = code;
+const sidoChange = (key) => {
+    selectedSido.value.code = key.value;
+    selectedSido.value.text = key.text;
     gugunList.value = [{ text: "구군선택", value: "" }];
     dongList.value = [{ text: "법정동선택", value: "" }];
     getAddress({
-        regcode_pattern: code.substr(0, 2) + "*0000",
+        regcode_pattern: key.value.substr(0, 2) + "*0000",
         is_ignore_zero: true,
     },
         ({ data }) => {
-            console.log("구군 정보 : ", data);
+            // console.log("구군 정보 : ", data);
             let options = [...gugunList.value];
             data.regcodes.forEach((gugun) => {
                 // options.push({ text: gugun.name.split(" ")[1], value: gugun.code });
@@ -64,16 +68,17 @@ const sidoChange = (code) => {
             console.log(err);
         })
 }
-const gugunChange = (code) => {
-    selectedGugun.value = code;
+const gugunChange = (key) => {
+    selectedGugun.value.code = key.value;
+    selectedGugun.value.text = key.text;
     dongList.value = [{ text: "구군선택", value: "" }];
     // 구군 정보가 불러와졌다면 동 정보 불러오기
     getAddress({
-        regcode_pattern: code.substr(0, 5) + "*",
+        regcode_pattern: key.value.substr(0, 5) + "*",
         is_ignore_zero: true,
     },
         ({ data }) => {
-            console.log("법정동 정보 : ", data);
+            // console.log("법정동 정보 : ", data);
             let options = [...dongList.value];
             data.regcodes.forEach((dong) => {
                 options.push({ text: dong.name, value: dong.code });
@@ -84,17 +89,43 @@ const gugunChange = (code) => {
             console.log(err);
         })
 }
-const dongChange = (code) => {
-    selectedDong.value = code;
+const dongChange = (key) => {
+    // console.log("key : ", key)
+    selectedDong.value.code = key.value;
+    selectedDong.value.text = key.text;
+    getCurrentLocation();
 }
+
+const getCurrentLocation = () => {
+    // console.log("asdasd",selectedDong.value.text);
+    var geocoder = new kakao.maps.services.Geocoder();
+    geocoder.addressSearch(selectedDong.value.text, (result, status) => {
+        if (status === kakao.maps.services.Status.OK) {
+            console.log(result);
+            const a = {
+                lat : result[0].y, // 위도
+                lng : result[0].x, // 경도
+            }
+            currentLocation.value = a;
+            // currentLocation.value.lat =  result[0].x;
+            // currentLocation.value.lng =  result[0].y;
+        }
+    });
+}
+
 </script>
 
 <template>
-    <v-select @update:modelValue="sidoChange" label="시도정보" :items="sidoList" :item-title="'text'" :item-value="'value'"
+    <!-- <v-select @update:modelValue="sidoChange" label="시도정보" :items="sidoList" :item-title="'text'" :item-value="'value'"
         variant="solo-filled"></v-select>
     <v-select @update:modelValue="gugunChange" label="구군정보" :items="gugunList" :item-title="'text'" :item-value="'value'"
         variant="solo-filled"></v-select>
-    <v-select @update:modelValue="dongChange" label="법정동정보" :items="dongList" :item-title="'text'" :item-value="'value'" variant="solo-filled"></v-select>
+    <v-select @update:modelValue="dongChange" label="법정동정보" :items="dongList" :item-title="'text'" :item-value="'value'" variant="solo-filled"></v-select> -->
+
+    <VSelect :selectOption="sidoList" @onKeySelect="sidoChange" />
+    <VSelect :selectOption="gugunList" @onKeySelect="gugunChange" />
+    <VSelect :selectOption="dongList" @onKeySelect="dongChange" />
+    <!-- <VSelect :selectOption="dongList"/> -->
     <!-- <select v-model="selected.sido" name="asdf" id="asdf">
         <option  v-for="(list) in sidoList" :key="list.value" :value="list.value">{{ list.text }}</option>
     </select>
@@ -105,7 +136,7 @@ const dongChange = (code) => {
         <option v-for="(list) in sidoList" :key="list.value" :value="list.value">{{ list.text }}</option>
     </select> -->
 
-    <VKakaoMap />
+    <VKakaoMap :selectStation="currentLocation"/>
 </template>
 
 <style scoped>
