@@ -5,53 +5,63 @@ var map;
 const positions = ref([]);
 const markers = ref([]);
 
-const props = defineProps({ stations: Array, selectStation: Object });
-
+const props = defineProps({ markerList: Array, currentLocation: Object, apartDealList: Array, });
 onMounted(() => {
   if (window.kakao && window.kakao.maps) {
     initMap();
   } else {
     const script = document.createElement("script");
-    script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${
-      import.meta.env.VITE_KAKAO_MAP_SERVICE_KEY
-    }&libraries=services,clusterer`;
+    script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${import.meta.env.VITE_KAKAO_MAP_SERVICE_KEY
+      }&libraries=services,clusterer`;
     /* global kakao */
     script.onload = () => kakao.maps.load(() => initMap());
     document.head.appendChild(script);
   }
 });
 
-// watch(
-//   () => props.stations.value,
-//   () => {
-//     positions.value = [];
-//     props.stations.forEach((station) => {
-//       let obj = {};
-//       obj.latlng = new kakao.maps.LatLng(station.lat, station.lng);
-//       obj.title = station.statNm;
+watch(
+  ()=>props.markerList,
+  (ol,ne) => {
+    console.log("watch ( markerList 감지됨 )");
+    if(ne.length != 0 ) {
 
-//       positions.value.push(obj);
-//     });
-//     loadMarkers();
-//   },
-//   { deep: true }
-// );
+      positions.value = [];
+      props.markerList.forEach((apart) => {
+        let obj = {};
+        obj.latlng = new kakao.maps.LatLng(apart.lat, apart.lng);
+        obj.title = apart.statNm;
+  
+        positions.value.push(obj);
+      });
+      loadMarkers();
+    }
+    else {
+      positions.value = [];
+      loadMarkers();
+    }
+  },
+  { deep: true }
+);
+
 
 watch(
-  () => props.selectStation.value,
+  () => props.currentLocation,
   () => {
     // 이동할 위도 경도 위치를 생성합니다
     var moveLatLon = new kakao.maps.LatLng(
-      props.selectStation.lat,
-      props.selectStation.lng
+      props.currentLocation.lat,
+      props.currentLocation.lng
     );
-    console.log("moveLatLon : ", moveLatLon);
 
     // 지도 중심을 부드럽게 이동시킵니다
     // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
     // map.panTo(moveLatLon);
-    console.log("map : ",map);
-    map.setCenter(moveLatLon);
+    // map.panTo(moveLatLon);
+    // var marker = new kakao.maps.Marker({
+    //   map: map,
+    //   position: new kakao.maps.LatLng(props.currentLocation.lat, map.getCenter().getLng()),
+    // });
+    // marker.setMap(map);
   },
   { deep: true }
 );
@@ -98,6 +108,7 @@ const loadMarkers = () => {
   );
 
   map.setBounds(bounds);
+
 };
 
 const deleteMarkers = () => {
@@ -105,10 +116,30 @@ const deleteMarkers = () => {
     markers.value.forEach((marker) => marker.setMap(null));
   }
 };
+
+
+function test() {
+  console.log("props.markerList", props.markerList);
+  console.log("markers", markers.value);
+  console.log("positions", positions.value);
+}
+function test2() {
+  positions.value = [];
+  props.markerList.forEach((apart) => {
+    let obj = {};
+    obj.latlng = new kakao.maps.LatLng(apart.lat, apart.lng);
+    obj.title = apart.statNm;
+
+    positions.value.push(obj);
+  });
+  loadMarkers();
+}
 </script>
 
 <template>
-    <div id="map"></div>
+  <button class="btn" @click="test">markerList 출력</button>
+  <button class="btn" @click="test2">마커그리기</button>
+  <div id="map"></div>
 </template>
 
 <style>
