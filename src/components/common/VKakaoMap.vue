@@ -1,11 +1,23 @@
 <script setup>
 import { ref, watch, onMounted } from "vue";
 
+// Store Import
+import {storeToRefs } from 'pinia';
+import {useHouseStore } from '@/stores/houseStore';
+
+const houseStore = useHouseStore();
+
+
+const {
+    // State
+    markerPositions,
+} = storeToRefs(houseStore);
+
 var map;
 const positions = ref([]);
 const markers = ref([]);
 
-const props = defineProps({ markerList: Array, currentLocation: Object, apartDealList: Array, });
+const props = defineProps({ markerList: Array, currentLocation: Object, });
 onMounted(() => {
   if (window.kakao && window.kakao.maps) {
     initMap();
@@ -19,30 +31,40 @@ onMounted(() => {
   }
 });
 
-watch(
-  ()=>props.markerList,
-  (ol,ne) => {
-    console.log("watch ( markerList 감지됨 )");
-    if(ne.length != 0 ) {
+// watch(
+//   ()=>props.markerList,
+//   (ol,ne) => {
+//     console.log("watch ( markerList 감지됨 )");
+//     if(ne.length != 0 ) {
 
-      positions.value = [];
-      props.markerList.forEach((apart) => {
-        let obj = {};
-        obj.latlng = new kakao.maps.LatLng(apart.lat, apart.lng);
-        obj.title = apart.statNm;
+//       positions.value = [];
+//       props.markerList.forEach((apart) => {
+//         let obj = {};
+//         obj.latlng = new kakao.maps.LatLng(apart.lat, apart.lng);
+//         obj.title = apart.statNm;
   
-        positions.value.push(obj);
-      });
-      loadMarkers();
-    }
-    else {
-      positions.value = [];
-      loadMarkers();
-    }
-  },
-  { deep: true }
-);
+//         positions.value.push(obj);
+//       });
+//       loadMarkers();
+//     }
+//     else {
+//       positions.value = [];
+//       loadMarkers();
+//     }
+//   },
+//   { deep: true }
+// );
 
+watch(
+  markerPositions,
+  () => {
+    if(markerPositions.length == 0) {
+    }else {
+      // loadMarkers();
+      console.log("loadMarkers()")
+    }
+  }
+);
 
 watch(
   () => props.currentLocation,
@@ -55,7 +77,7 @@ watch(
 
     // 지도 중심을 부드럽게 이동시킵니다
     // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
-    // map.panTo(moveLatLon);
+    map.panTo(moveLatLon);
     // map.panTo(moveLatLon);
     // var marker = new kakao.maps.Marker({
     //   map: map,
@@ -77,6 +99,13 @@ const initMap = () => {
   // loadMarkers();
 };
 
+const loadMarkers2 = () => {
+  // 현재 표시되어있는 marker들이 있다면 map에 등록된 marker를 제거한다.
+
+
+  // 마커를 생성합니다
+}
+
 const loadMarkers = () => {
   // 현재 표시되어있는 marker들이 있다면 map에 등록된 marker를 제거한다.
   deleteMarkers();
@@ -89,7 +118,7 @@ const loadMarkers = () => {
 
   // 마커를 생성합니다
   markers.value = [];
-  positions.value.forEach((position) => {
+  markerPositions.value.forEach((position) => {
     const marker = new kakao.maps.Marker({
       map: map, // 마커를 표시할 지도
       position: position.latlng, // 마커를 표시할 위치
@@ -102,7 +131,7 @@ const loadMarkers = () => {
 
   // 4. 지도를 이동시켜주기
   // 배열.reduce( (누적값, 현재값, 인덱스, 요소)=>{ return 결과값}, 초기값);
-  const bounds = positions.value.reduce(
+  const bounds = markerPositions.value.reduce(
     (bounds, position) => bounds.extend(position.latlng),
     new kakao.maps.LatLngBounds()
   );
@@ -139,6 +168,11 @@ function test2() {
 <template>
   <button class="btn" @click="test">markerList 출력</button>
   <button class="btn" @click="test2">마커그리기</button>
+
+  <ul>
+    <li v-for="(item) in markerPositions" :key="item.title">{{ item.title }}</li>
+  </ul>
+
   <div id="map"></div>
 </template>
 
