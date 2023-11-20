@@ -64,7 +64,7 @@ const { isLogin, logout } = memberStore;
         </template>
         <template v-else>
           <li class="nav-item">
-            <router-link :to="{ name: 'UserLogin' }" class="nav-link"
+            <router-link :to="{ name: 'UserLoginNew' }" class="nav-link"
               >로그인</router-link
             >
           </li>
