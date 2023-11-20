@@ -31,13 +31,28 @@ body,
 html {
 	overflow-x:hidden;
 }
-
+@font-face {
+    font-family: 'omyu_pretty';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face { /* 애플산돌고딕 폰트 적용 */
+	font-family: "Supermario";
+	src: url("../fonts/SuperMario256.ttf") format("truetype");
+	font-weight: normal;
+  } /* 이후 "SDGothic"으로 폰트 적용 가능 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap');
 body {
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'omyu_pretty' 'Open Sans', sans-serif;
 	font-size: 15px;
 	letter-spacing: 0.5px;
 	line-height: 1.5;
 	color: #1c1b1b;
+	background: url('../images/texture.png');
+	background-color: #5c546b;
+	background-repeat: repeat;
+	font-family: 'Noto Sans KR', sans-serif;
 }
 
 ul {
