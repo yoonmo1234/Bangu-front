@@ -17,7 +17,7 @@
 		      </button>
 
 		      <!-- Text Logo -->
-		      <a class="navbar-brand" href="#">Bangu</a>
+		      <RouterLink :to="{name:'index'}" class="navbar-brand" href="#">Bangu</RouterLink>
 
 		      <!-- Image Logo -->
 		      <!-- <a class="navbar-brand" href="#"><img src="@/assets/images/logo.png"></a> -->

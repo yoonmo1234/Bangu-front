@@ -26,6 +26,7 @@
 						<div class="mu-featured-content">
 							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere ipsa necessitatibus voluptate. Dolores sed neque, accusantium iusto inventore harum quibusdam, aspernatur, ullam vero ea eos ipsam tenetur dolore qui voluptatibus!</p>
 							<a href="#mu-portfolio" class="mu-primary-btn view-my-work-btn" style="font-size: 20px;">랭킹 차트 보러 가기</a>
+							<RouterLink :to="{name:'apt-deal'}" class="mu-primary-btn view-my-work-btn" style="font-size: 20px;">임시 지도로 가기</RouterLink>
 						</div>
 
 					</div>
