@@ -27,6 +27,10 @@ const {
 
 // Data
 const currentLocation = ref({});
+const flag = ref(false);
+const apts = ref([]);
+
+const data = [];
 
 watch(isReadyToSearch, () => {
   if (isReadyToSearch.value) {
@@ -50,48 +54,11 @@ const getCurrentLocation = async () => {
     }
   });
 };
-watch(apartDealList, async () => {
-  // Marker 포지션 구하기
-  const apts = [];
-  var geocoder = new kakao.maps.services.Geocoder();
+// watch(
+//     apartDealList,
+//     async () => {
 
-  for (const apt of apartDealList.value) {
-    const len = selectedDong.value.text.split(" ").length;
-    const dong = selectedDong.value.text.split(" ")[len - 1].trim();
-    if (apt["법정동"].trim() === dong) {
-      let add =
-        apt["중개사소재지"].trim() +
-        " " +
-        apt["법정동"].trim() +
-        " " +
-        apt["지번"];
-      console.log("add : ", add);
-      await geocoder.addressSearch(
-        add,
-        (result, status) => {
-          if (status === kakao.maps.services.Status.OK) {
-            apts.push({
-              latlng: new kakao.maps.LatLng(result[0].y, result[0].x),
-              title: apt["아파트"],
-              // lat : result[0].y,
-              // lng : result[0].x,
-            });
-            // markerList.value = apts;
-            // markerList.value.push({
-            //     lat : result[0].y,
-            //     lng : result[0].x,
-            // });
-          }
-        },
-        {
-          analyze_type: "EXACT",
-        }
-      );
-    }
-  }
-  console.log("apt :", apts);
-  markerPositions.value = apts;
-});
+// })
 const getApartList = async () => {
   await getApartDealInfo(
     {
@@ -110,6 +77,65 @@ const getApartList = async () => {
     }
   );
 };
+
+watch(apartDealList, async (ol, ne) => {
+  // const apts = [];
+  var geocoder = new kakao.maps.services.Geocoder();
+  let i = 1;
+  const size = apartDealList.value.length;
+  console.log("size : ", size);
+  for (const apt of apartDealList.value) {
+    const len = selectedDong.value.text.split(" ").length;
+    const dong = selectedDong.value.text.split(" ")[len - 1].trim();
+    if (apt["법정동"].trim() === dong) {
+      let add =
+        apt["중개사소재지"].trim() +
+        " " +
+        apt["법정동"].trim() +
+        " " +
+        apt["지번"];
+      await geocoder.addressSearch(
+        add,
+        (result, status) => {
+          if (status === kakao.maps.services.Status.OK) {
+            apts.value.push({
+              latlng: new kakao.maps.LatLng(result[0].y, result[0].x),
+              title: apt["아파트"],
+              // lat : result[0].y,
+              // lng : result[0].x,
+            });
+
+            // markerList.value = apts;
+            // markerList.value.push({
+            //     lat : result[0].y,
+            //     lng : result[0].x,
+            // });
+          }
+        },
+        {
+          analyze_type: "EXACT",
+        }
+      );
+    }
+    console.log("i : ", i);
+    if (i++ === size) {
+      console.log("for문 안에서 apts : ", apts.value);
+      console.log("for문 안에서 apts : ", apts);
+      flag.value = true;
+    }
+  }
+  //   console.log("apt :", apts)
+  //   markerPositions.value = apts;
+});
+watch(flag, () => {
+  if (flag.value) {
+    console.log("무한반복 체크");
+    console.log("apts : ", apts.value);
+    markerPositions.value = apts.value;
+    apts.value = []; // apts 초기화
+    flag.value = false;
+  }
+});
 // watch(apartDealList, () => {
 //     // markerList.value.clear()];
 //     markerList.value.splice(0,markerList.value.length);

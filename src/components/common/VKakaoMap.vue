@@ -1,20 +1,23 @@
 <script setup>
-import { ref, watch, onMounted } from "vue";
+import { ref, watch, computed, onMounted } from "vue";
 
 // Store Import
-import {storeToRefs } from 'pinia';
-import {useHouseStore } from '@/stores/houseStore';
+import { storeToRefs } from 'pinia';
+import { useHouseStore } from '@/stores/houseStore';
 
 const houseStore = useHouseStore();
 
 
 const {
-    // State
-    markerPositions,
+  // State
+  markerPositions,
+  apartDealList,
+  selectedDong,
 } = storeToRefs(houseStore);
 
 var map;
 const positions = ref([]);
+// const positions = computed(() => markerPositions);
 const markers = ref([]);
 
 const props = defineProps({ markerList: Array, currentLocation: Object, });
@@ -32,61 +35,37 @@ onMounted(() => {
 });
 
 // watch(
-//   ()=>props.markerList,
-//   (ol,ne) => {
-//     console.log("watch ( markerList 감지됨 )");
-//     if(ne.length != 0 ) {
+//   markerPositions,
+//   (ol ,ne) =>  {
+//     console.log("ol : ", ol);
+//     console.log("ne : ", ne);
+//     positions.value = ol.value;
+//     loadMarkers();
 
-//       positions.value = [];
-//       props.markerList.forEach((apart) => {
-//         let obj = {};
-//         obj.latlng = new kakao.maps.LatLng(apart.lat, apart.lng);
-//         obj.title = apart.statNm;
-  
-//         positions.value.push(obj);
-//       });
-//       loadMarkers();
-//     }
-//     else {
-//       positions.value = [];
-//       loadMarkers();
-//     }
+//   }
+// )
+
+// watch(
+//   () => props.currentLocation,
+//   () => {
+//     // 이동할 위도 경도 위치를 생성합니다
+//     var moveLatLon = new kakao.maps.LatLng(
+//       props.currentLocation.lat,
+//       props.currentLocation.lng
+//     );
+
+//     // 지도 중심을 부드럽게 이동시킵니다
+//     // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
+//     map.panTo(moveLatLon);
+//     // map.panTo(moveLatLon);
+//     // var marker = new kakao.maps.Marker({
+//     //   map: map,
+//     //   position: new kakao.maps.LatLng(props.currentLocation.lat, map.getCenter().getLng()),
+//     // });
+//     // marker.setMap(map);
 //   },
 //   { deep: true }
 // );
-
-watch(
-  markerPositions,
-  () => {
-    if(markerPositions.length == 0) {
-    }else {
-      // loadMarkers();
-      console.log("loadMarkers()")
-    }
-  }
-);
-
-watch(
-  () => props.currentLocation,
-  () => {
-    // 이동할 위도 경도 위치를 생성합니다
-    var moveLatLon = new kakao.maps.LatLng(
-      props.currentLocation.lat,
-      props.currentLocation.lng
-    );
-
-    // 지도 중심을 부드럽게 이동시킵니다
-    // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
-    map.panTo(moveLatLon);
-    // map.panTo(moveLatLon);
-    // var marker = new kakao.maps.Marker({
-    //   map: map,
-    //   position: new kakao.maps.LatLng(props.currentLocation.lat, map.getCenter().getLng()),
-    // });
-    // marker.setMap(map);
-  },
-  { deep: true }
-);
 
 const initMap = () => {
   const container = document.getElementById("map");
@@ -98,6 +77,14 @@ const initMap = () => {
 
   // loadMarkers();
 };
+
+watch(
+  markerPositions,
+  () => {
+    console.log("positions 감시")
+    console.log("watch : " ,markerPositions.value);
+  }
+)
 
 const loadMarkers2 = () => {
   // 현재 표시되어있는 marker들이 있다면 map에 등록된 marker를 제거한다.
@@ -148,26 +135,29 @@ const deleteMarkers = () => {
 
 
 function test() {
-  console.log("props.markerList", props.markerList);
+  console.log("props.markerList", markerPositions);
   console.log("markers", markers.value);
   console.log("positions", positions.value);
 }
 function test2() {
   positions.value = [];
-  props.markerList.forEach((apart) => {
+  console.log("markerPositions",markerPositions.value);
+  // props.markerList.forEach((apart) => {
+  markerPositions.value.forEach((apart) => {
     let obj = {};
     obj.latlng = new kakao.maps.LatLng(apart.lat, apart.lng);
     obj.title = apart.statNm;
 
     positions.value.push(obj);
   });
+  console.log("positions : ", positions.value);
   loadMarkers();
 }
 </script>
 
 <template>
   <button class="btn" @click="test">markerList 출력</button>
-  <button class="btn" @click="test2">마커그리기</button>
+  <button class="btn" @click="test2">아파트매물검색</button>
 
   <ul>
     <li v-for="(item) in markerPositions" :key="item.title">{{ item.title }}</li>
