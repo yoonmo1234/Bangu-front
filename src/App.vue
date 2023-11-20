@@ -1,13 +1,11 @@
 <script setup>
 import HeaderNav from './components/common/HeaderNav.vue';
-import IndexView from '@/views/IndexView.vue';
 
 
 </script>
 
 <template>
-  <!-- <HeaderNav /> -->
-  <IndexView />
+  <HeaderNav />
   <RouterView />
 </template>
 

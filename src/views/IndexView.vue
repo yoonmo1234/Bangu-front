@@ -3,69 +3,29 @@
 </script>
 
 <template>
-   <!-- Start Header -->
-	<header id="mu-header" class="" role="banner">
-		<div class="container">
-			<nav class="navbar navbar-default mu-navbar">
-		  <div class="container-fluid">
-		    <!-- Brand and toggle get grouped for better mobile display -->
-		    <div class="navbar-header">
-		      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-		        <span class="sr-only">Toggle navigation</span>
-		        <span class="icon-bar"></span>
-		        <span class="icon-bar"></span>
-		        <span class="icon-bar"></span>
-		      </button>
-
-		      <!-- Text Logo -->
-		      <a class="navbar-brand" href="#">Kevin</a>
-
-		      <!-- Image Logo -->
-		      <!-- <a class="navbar-brand" href="#"><img src="@/assets/images/logo.png"></a> -->
-
-
-		    </div>
-
-		    <!-- Collect the nav links, forms, and other content for toggling -->
-		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-		      	<ul class="nav navbar-nav mu-menu navbar-right">
-			        <li><a href="#">HOME</a></li>
-			        <li><a href="#mu-about">ABOUT US</a></li>
-			        <li><a href="#mu-service">SERVICES</a></li>
-		            <li><a href="#mu-portfolio">PORTFOLIO</a></li>
-		            <li><a href="#mu-testimonials">TESTIMONIALS</a></li>
-		            <li><a href="#mu-contact">CONTACT</a></li>
-		      	</ul>
-		    </div><!-- /.navbar-collapse -->
-		  </div><!-- /.container-fluid -->
-		</nav>
-		</div>
-	</header>
-	<!-- End Header -->
-
-	<!-- Start Featured Slider -->
-
+	<!-- 초록색 메인 페이지 -->
 	<section id="mu-featured-slider">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
-					<div class="mu-featured-area">
-						<h1>Kevin Petter</h1>
+					<div class="mu-featured-area" style="filter: drop-shadow(0 0 5rem #292d44);">
+						<h1 style="font-family:'Supermario' ;letter-spacing: 15px; font-size: 130px;">WHO's </h1>
+						<h1 style="font-family:'Supermario' ;letter-spacing: 15px; font-size: 170px;color:#CBBDE5">BANGU ? </h1>
 
 						<!-- Start text slide -->
-						<div class="mu-featured-slider-wrapper">
+						<!-- <div class="mu-featured-slider-wrapper">
 							<div class="mu-featured-slider" id="typed-strings">
 								<p>I am <span>UI/UX Designer</span></p>
 								<p>I am <span>Web Developer</span></p>
 		   						<p>I am <span>Photographer</span></p>
 							</div>
 							<span id="typed"></span>
-						</div>
+						</div> -->
 						<!-- Start text slide -->
 						
 						<div class="mu-featured-content">
 							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere ipsa necessitatibus voluptate. Dolores sed neque, accusantium iusto inventore harum quibusdam, aspernatur, ullam vero ea eos ipsam tenetur dolore qui voluptatibus!</p>
-							<a href="#mu-portfolio" class="mu-primary-btn view-my-work-btn">VIEW MY WORK</a>
+							<a href="#mu-portfolio" class="mu-primary-btn view-my-work-btn" style="font-size: 20px;">랭킹 차트 보러 가기</a>
 						</div>
 
 					</div>
@@ -99,7 +59,7 @@
 								<div class="row">
 									<div class="col-md-6">
 										<div class="mu-about-content-left">
-											<img class="mu-profile-img" src="assets/images/profile.jpg" alt="Profile Image">
+											<img class="mu-profile-img" src="@/assets/images/profile.jpg" alt="Profile Image">
 										</div>
 									</div>
 									<div class="col-md-6">
@@ -284,7 +244,7 @@
 
 					                <div class="col-xs-6 col-sm-4 col-md-4 filtr-item" data-category="1">
 					                	<div class="mu-item-thumbonail">
-					                		<img class="img-responsive" src="assets/images/portfolio/img-1.jpeg" alt="image">
+					                		<img class="img-responsive" src="src/assets/images/portfolio/img-1.jpeg" alt="image">
 					                	</div>
 					                	<div class="mu-filter-item-content">
 					                    	<h4 class="mu-filter-item-title">WEB DEVELOPMENT</h4>
@@ -295,7 +255,7 @@
 
 					                <div class="col-xs-6 col-sm-4 col-md-4 filtr-item" data-category="2">
 					                	<div class="mu-item-thumbonail">
-					                		<img class="img-responsive" src="assets/images/portfolio/img-2.jpeg" alt="image">
+					                		<img class="img-responsive" src="src/assets/images/portfolio/img-2.jpeg" alt="image">
 					                	</div>
 					                	<div class="mu-filter-item-content">
 					                    	<h4 class="mu-filter-item-title">UI/UX DESIGN</h4>
@@ -306,7 +266,7 @@
 
 					                <div class="col-xs-6 col-sm-4 col-md-4 filtr-item" data-category="3">
 					                	<div class="mu-item-thumbonail">
-					                		<img class="img-responsive" src="assets/images/portfolio/img-3.jpeg" alt="image">
+					                		<img class="img-responsive" src="src/assets/images/portfolio/img-3.jpeg" alt="image">
 					                	</div>
 					                	<div class="mu-filter-item-content">
 					                    	<h4 class="mu-filter-item-title">GRAPHICS DESIGN</h4>
@@ -317,7 +277,7 @@
 
 					                <div class="col-xs-6 col-sm-4 col-md-4 filtr-item" data-category="4">
 					                	<div class="mu-item-thumbonail">
-					                		<img class="img-responsive" src="assets/images/portfolio/img-4.jpeg" alt="image">
+					                		<img class="img-responsive" src="src/assets/images/portfolio/img-4.jpeg" alt="image">
 					                	</div>
 					                	<div class="mu-filter-item-content">
 					                    	<h4 class="mu-filter-item-title">MOBILE APP</h4>
@@ -328,7 +288,7 @@
 
 					                <div class="col-xs-6 col-sm-4 col-md-4 filtr-item" data-category="5">
 					                	<div class="mu-item-thumbonail">
-					                		<img class="img-responsive" src="assets/images/portfolio/img-5.jpeg" alt="image">
+					                		<img class="img-responsive" src="src/assets/images/portfolio/img-5.jpeg" alt="image">
 					                	</div>
 					                	<div class="mu-filter-item-content">
 					                    	<h4 class="mu-filter-item-title">BRANDING</h4>
@@ -339,7 +299,7 @@
 
 					                <div class="col-xs-6 col-sm-4 col-md-4 filtr-item" data-category="6">
 					                	<div class="mu-item-thumbonail">
-					                		<img class="img-responsive" src="assets/images/portfolio/img-6.jpeg" alt="image">
+					                		<img class="img-responsive" src="src/assets/images/portfolio/img-6.jpeg" alt="image">
 					                	</div>
 					                	<div class="mu-filter-item-content">
 					                    	<h4 class="mu-filter-item-title">MARKETING</h4>
@@ -350,7 +310,7 @@
 
 					                <div class="col-xs-6 col-sm-4 col-md-4 filtr-item" data-category="1">
 					                	<div class="mu-item-thumbonail">
-					                		<img class="img-responsive" src="assets/images/portfolio/img-7.jpg" alt="image">
+					                		<img class="img-responsive" src="src/assets/images/portfolio/img-7.jpg" alt="image">
 					                	</div>
 					                	<div class="mu-filter-item-content">
 					                    	<h4 class="mu-filter-item-title">WEB DEVELOPMENT</h4>
@@ -361,7 +321,7 @@
 
 					                <div class="col-xs-6 col-sm-4 col-md-4 filtr-item" data-category="4">
 					                	<div class="mu-item-thumbonail">
-					                		<img class="img-responsive" src="assets/images/portfolio/img-8.jpeg" alt="image">
+					                		<img class="img-responsive" src="src/assets/images/portfolio/img-8.jpeg" alt="image">
 					                	</div>
 					                	<div class="mu-filter-item-content">
 					                    	<h4 class="mu-filter-item-title">MOBILE APP</h4>
@@ -372,7 +332,7 @@
 
 					                <div class="col-xs-6 col-sm-4 col-md-4 filtr-item" data-category="3">
 					                	<div class="mu-item-thumbonail">
-					                		<img class="img-responsive" src="assets/images/portfolio/img-9.jpeg" alt="image">
+					                		<img class="img-responsive" src="src/assets/images/portfolio/img-9.jpeg" alt="image">
 					                	</div>
 					                	<div class="mu-filter-item-content">
 					                    	<h4 class="mu-filter-item-title">GRAPHICS DESIGN</h4>
@@ -520,7 +480,7 @@
 
 <style scoped>
     /* @import '@/assets/images'; */
-    @import '@/assets/css/slick.css';
+    /* @import '@/assets/css/slick.css';
     @import '@/assets/css/magnific-popup.css';
-    @import '@/assets/css/theme-color/default-theme.css';
+    @import '@/assets/css/theme-color/default-theme.css'; */
 </style>
