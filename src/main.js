@@ -6,7 +6,6 @@ import router from './router'
 
 // import '@/style.css';
 
-
 // Vuetify
 import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
