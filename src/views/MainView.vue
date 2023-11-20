@@ -1,49 +1,86 @@
 <script setup>
 
+        // <RouterLink :to="{name : 'apt-deal' }" href="#" class="text-decoration-none text-dark">
 </script>
 
 <template>
-    <main
-      class="container border col-10 p-5 d-flex flex-column justify-content-center">
-      <div class="d-flex justify-content-evenly">
-        <RouterLink :to="{name : 'apt-deal' }" href="#" class="text-decoration-none text-dark">
-          <div class="select-menu d-flex flex-column fw-bold fs-2 shadow">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="72"
-              height="72"
-              fill="currentColor"
-              class="bi bi-buildings"
-              viewBox="0 0 16 16">
-              <path
-                d="M14.763.075A.5.5 0 0 1 15 .5v15a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V14h-1v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V10a.5.5 0 0 1 .342-.474L6 7.64V4.5a.5.5 0 0 1 .276-.447l8-4a.5.5 0 0 1 .487.022ZM6 8.694 1 10.36V15h5V8.694ZM7 15h2v-1.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5V15h2V1.309l-7 3.5V15Z" />
-              <path
-                d="M2 11h1v1H2v-1Zm2 0h1v1H4v-1Zm-2 2h1v1H2v-1Zm2 0h1v1H4v-1Zm4-4h1v1H8V9Zm2 0h1v1h-1V9Zm-2 2h1v1H8v-1Zm2 0h1v1h-1v-1Zm2-2h1v1h-1V9Zm0 2h1v1h-1v-1ZM8 7h1v1H8V7Zm2 0h1v1h-1V7Zm2 0h1v1h-1V7ZM8 5h1v1H8V5Zm2 0h1v1h-1V5Zm2 0h1v1h-1V5Zm0-2h1v1h-1V3Z" />
-            </svg>
-            <br />
-            아파트
-          </div></RouterLink
-        >
-        <a href="#" class="text-decoration-none text-dark">
-          <div class="select-menu fw-bold fs-2 d-flex flex-column shadow">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="72"
-              height="72"
-              fill="currentColor"
-              class="bi bi-houses"
-              viewBox="0 0 16 16">
-              <path
-                d="M5.793 1a1 1 0 0 1 1.414 0l.647.646a.5.5 0 1 1-.708.708L6.5 1.707 2 6.207V12.5a.5.5 0 0 0 .5.5.5.5 0 0 1 0 1A1.5 1.5 0 0 1 1 12.5V7.207l-.146.147a.5.5 0 0 1-.708-.708L5.793 1Zm3 1a1 1 0 0 1 1.414 0L12 3.793V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v3.293l1.854 1.853a.5.5 0 0 1-.708.708L15 8.207V13.5a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 4 13.5V8.207l-.146.147a.5.5 0 1 1-.708-.708L8.793 2Zm.707.707L5 7.207V13.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5V7.207l-4.5-4.5Z" />
-            </svg>
-            <br />
-            주택
-          </div></a
-        >
-      </div>
-    </main>
+
+
+<!-- Start Header -->
+	<header id="mu-header" class="" role="banner">
+		<div class="container">
+			<nav class="navbar navbar-default mu-navbar">
+		  <div class="container-fluid">
+		    <!-- Brand and toggle get grouped for better mobile display -->
+		    <div class="navbar-header">
+		      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+		        <span class="sr-only">Toggle navigation</span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		      </button>
+
+		      <!-- Text Logo -->
+		      <a class="navbar-brand" href="#">Kevin</a>
+
+		      <!-- Image Logo -->
+		      <!-- <a class="navbar-brand" href="#"><img src="assets/images/logo.png"></a> -->
+
+
+		    </div>
+
+		    <!-- Collect the nav links, forms, and other content for toggling -->
+		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		      	<ul class="nav navbar-nav mu-menu navbar-right">
+			        <li><a href="#">HOME</a></li>
+			        <li><a href="#mu-about">ABOUT US</a></li>
+			        <li><a href="#mu-service">SERVICES</a></li>
+		            <li><a href="#mu-portfolio">PORTFOLIO</a></li>
+		            <li><a href="#mu-testimonials">TESTIMONIALS</a></li>
+		            <li><a href="#mu-contact">CONTACT</a></li>
+		      	</ul>
+		    </div><!-- /.navbar-collapse -->
+		  </div><!-- /.container-fluid -->
+		</nav>
+		</div>
+	</header>
+	<!-- End Header -->
+
+	<!-- Start Featured Slider -->
+
+	<section id="mu-featured-slider">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="mu-featured-area">
+						<h1>Kevin Petter</h1>
+
+						<!-- Start text slide -->
+						<div class="mu-featured-slider-wrapper">
+							<div class="mu-featured-slider" id="typed-strings">
+								<p>I am <span>UI/UX Designer</span></p>
+								<p>I am <span>Web Developer</span></p>
+		   						<p>I am <span>Photographer</span></p>
+							</div>
+							<span id="typed"></span>
+						</div>
+						<!-- Start text slide -->
+						
+						<div class="mu-featured-content">
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere ipsa necessitatibus voluptate. Dolores sed neque, accusantium iusto inventore harum quibusdam, aspernatur, ullam vero ea eos ipsam tenetur dolore qui voluptatibus!</p>
+							<a href="#mu-portfolio" class="mu-primary-btn view-my-work-btn">VIEW MY WORK</a>
+						</div>
+
+					</div>
+				</div>			
+			</div>
+		</div>
+	</section>
+	
+	<!-- End Featured Slider -->
+
 </template>
 
 <style scoped>
-@import "@/assets/css/main.css";
+/* @import "@/assets/css/main.css"; */
 </style>
