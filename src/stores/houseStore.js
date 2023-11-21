@@ -119,36 +119,75 @@ export const useHouseStore = defineStore('house', () => {
     }
 
     function search() {
-        apartDealList.value = [];
+        markerPositions.value = [];
         // markerPositions.value = [];
-        // setTimeout(() => {
-        // }, 50)
-        getApartList();
+        setTimeout(() => {
+            console.log("search()");
+            getApartList();
+        }, 100)
     }
 
     // 내부 API
 
-    const getCurrentLocation = () => {
+    const getCurrentLocation = async () => {
         var geocoder = new kakao.maps.services.Geocoder();
+        const addr = `${selectedSido.value.text} ${selectedGugun.value.text} ${selectedDong.value.text}`;
+        console.log("addr : ", addr);
+        await geocoder.addressSearch(addr, (result, status) => {
+            if (status === kakao.maps.services.Status.OK) {
+                const curLatLng = {
+                    lat: result[0].y, // 위도
+                    lng: result[0].x, // 경도
+                }
+                // let result = new kakao.maps.LatLng(result[0].y, result[0].x)
+                return curLatLng;
+            }
+            return null;
+        });
     }
 
+
     const getApartList = async () => {
-        await getApartDealInfo({
-            serviceKey: import.meta.env.VITE_OPEN_API_SERVICE_KEY,
-            LAWD_CD: selectedGugun.value.code.substring(0, 5), //앞의 5개가 지역코드임
-            DEAL_YMD: 202301,
-        },
-            ({ data }) => {
-                // console.log("지역 코드 ", selectedGugun.value.code.substring(0, 5));
-                apartDealList.value = data.response.body.items.item;
-                // console.log("apartDealList.value",apartDealList.value);
-                // setMarkerList();
+        let years = [
+            202201,
+            202202,
+            202203,
+            202204,
+            202205,
+            202206,
+            202207,
+            202208,
+            202209,
+            202210,
+            202211,
+            202212,
+        ];
+        let apartList = [];
+        for(let i =0; i<years.length;i++) {
+            await getApartDealInfo({
+                serviceKey: import.meta.env.VITE_OPEN_API_SERVICE_KEY,
+                LAWD_CD: selectedGugun.value.code.substring(0, 5), //앞의 5개가 지역코드임
+                DEAL_YMD: years[i],
             },
-            (err) => {
-                console.log(err);
-            }
-        );
-    }
+                ({ data }) => {
+                    // console.log("data.response.body.items.item", data.response.body.items.item);
+                    // apartDealList.value = data.response.body.items.item;
+                    apartList.push(...data.response.body.items.item);
+                },
+                (err) => {
+                    console.log(err);
+                }
+            );
+        }
+        setTimeout(() => {
+            console.log("apartList",apartList);
+            apartDealList.value = apartList;
+        },1000)
+    } // getApartList End
+
+
+
+
     return {
         // State
         sidoList,
@@ -168,5 +207,6 @@ export const useHouseStore = defineStore('house', () => {
         changeSido,
         changeGugun,
         changeDong,
+        getCurrentLocation,
     }
 })

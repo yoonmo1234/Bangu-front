@@ -66,12 +66,12 @@ const router = createRouter({
           component: () => import("@/components/board/BoardModify.vue"),
           beforeEnter: onlyAuthUser,
         },
-        {
-          path: "/apt-deal",
-          name: "apt-deal",
-          component: import("@/views/AptDealView.vue"),
-        },
       ],
+    },
+    {
+      path: "/apt-deal",
+      name: "apt-deal",
+      component: import("@/views/AptDealView.vue"),
     },
   ],
 });
