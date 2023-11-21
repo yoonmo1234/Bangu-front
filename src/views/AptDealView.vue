@@ -30,8 +30,7 @@ const currentLocation = ref({});
 const flag = ref(false);
 const apts = ref([]);
 
-const data = [];
-
+let debounce = null;
 // watch(isReadyToSearch, () => {
 //     if(isReadyToSearch.value) {
 //         console.log("검색 준비 완료!");
