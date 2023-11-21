@@ -48,7 +48,8 @@ const onSelect = (e) => {
   }else {
     selectedDong.value.code = key.value;
     selectedDong.value.text = text;
-    changeDong(); // 사실상 필요없음
+    console.log("changeDong()");
+    changeDong();
   }
 };
 </script>

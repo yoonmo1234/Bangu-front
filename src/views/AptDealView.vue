@@ -30,8 +30,8 @@ const currentLocation = ref({});
 const flag = ref(false);
 const apts = ref([]);
 
-const data = [];
 
+let debounce = null;
 // watch(isReadyToSearch, () => {
 //     if(isReadyToSearch.value) {
 //         console.log("검색 준비 완료!");
@@ -79,42 +79,46 @@ watch(
     apartDealList,
     async (ol, ne) => {
       // apartDealList를 초기화 하는 거면 밑의 로직은 실행 안되게 하는 if문
+      clearTimeout(debounce);
+      debounce = setTimeout(() => {
+
+      },50)
       if(apartDealList.value.length === 0) {
         return;
       }
-
-      // markerPositions.value = [];
-    // const apts = [];
-      var geocoder = new kakao.maps.services.Geocoder();
-    let i = 1;
-    const size = apartDealList.value.length;
-    for (const apt of apartDealList.value) {
-          const len = selectedDong.value.text.split(" ").length;
-        const dong = selectedDong.value.text.split(" ")[len - 1].trim();
-        if (apt['법정동'].trim() === dong) {
-          let add = apt['중개사소재지'].trim() + " " + apt['법정동'].trim() + " " + apt['지번'];
-          await geocoder.addressSearch(add, (result, status) => {
-            if (status === kakao.maps.services.Status.OK) {
-              apts.value.push({
-                latlng: new kakao.maps.LatLng(result[0].y, result[0].x),
-                title: apt['아파트'],
-                // lat : result[0].y,
-                // lng : result[0].x,
+      else {
+        markerPositions.value = [];
+      // const apts = [];
+        var geocoder = new kakao.maps.services.Geocoder();
+      let i = 1;
+      const size = apartDealList.value.length;
+      for (const apt of apartDealList.value) {
+            const len = selectedDong.value.text.split(" ").length;
+          const dong = selectedDong.value.text.split(" ")[len - 1].trim();
+          if (apt['법정동'].trim() === dong) {
+            let add = apt['중개사소재지'].trim() + " " + apt['법정동'].trim() + " " + apt['지번'];
+            await geocoder.addressSearch(add, (result, status) => {
+              if (status === kakao.maps.services.Status.OK) {
+                apts.value.push({
+                  latlng: new kakao.maps.LatLng(result[0].y, result[0].x),
+                  title: apt['아파트'],
+                  // lat : result[0].y,
+                  // lng : result[0].x,
+                });
+              }
+            },
+              {
+                analyze_type: 'EXACT',
               });
-            }
-          },
-            {
-              analyze_type: 'EXACT',
-            });
+          }
+          if(i++ === size) {
+              flag.value = true;
+          }
         }
-        if(i++ === size) {
-            console.log("for문 안에서 apts : ", apts.value);
-            console.log("for문 안에서 apts : ", apts);
-            flag.value = true;
-        }
+      //   console.log("apt :", apts)
+        markerPositions.value = apts.value;
       }
-    //   console.log("apt :", apts)
-      markerPositions.value = apts.value;
+
     }
 )
 </script>

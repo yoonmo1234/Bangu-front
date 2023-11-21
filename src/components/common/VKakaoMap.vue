@@ -6,6 +6,7 @@ import { storeToRefs } from 'pinia';
 import { useHouseStore } from '@/stores/houseStore';
 
 const houseStore = useHouseStore();
+let debounce = null;
 
 
 const {
@@ -47,13 +48,14 @@ const initMap = () => {
 watch(
   markerPositions,
   () => {
-    setTimeout(() => {
-      if(markerPositions.value.length === 0){
-        return;
-      }else {
-        loadMarkers();
-      }
-    }, 100);
+    clearTimeout(debounce);
+    debounce = setTimeout(() => {
+      console.log("markerPostions 실행됨")
+        if(markerPositions.value.length === 0) return;
+        else {
+          loadMarkers();
+        }
+    },50)
   }
 )
 
@@ -94,7 +96,10 @@ const loadMarkers = () => {
 const deleteMarkers = () => {
   console.log("deleteMarkers");
   if (markers.value.length > 0) {
-    markers.value.forEach((marker) => marker.setMap(null));
+    markers.value.forEach((marker) => {
+      console.log("marker: ",marker);
+      marker.setMap(null)
+    });
   }
 };
 
