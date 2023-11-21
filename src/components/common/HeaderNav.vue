@@ -18,70 +18,49 @@ const logout = async () => {
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
-    <!-- <c:if test="${cookie.ssafy_id.value ne null}">
-		<c:set var="idck" value=" checked"/>
-		<c:set var="saveid" value="${cookie.ssafy_id.value}"/>
-	</c:if> -->
-    <div class="container">
-      <!-- <a class="navbar-brand text-primary fw-bold" href="#">
-      WhereIsMyHome
-    </a> -->
-      <RouterLink
-        :to="{ name: 'index' }"
-        class="navbar-brand text-primary fw-bold"
-        aria-current="page"
-        >방구</RouterLink
-      >
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-lg-0">
-          <li class="nav-item">
-            <RouterLink
-              :to="{ name: 'board' }"
-              class="nav-link"
-              aria-current="page"
-              href="#"
-              >QnA</RouterLink
-            >
-            <!-- 게시판 -->
-          </li>
-        </ul>
-      </div>
-      <ul
-        class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll"
-        style="--bs-scroll-height: 100px">
-        <template v-if="isLogin">
-          <li class="nav-item">
-            <router-link
-              :to="{ name: 'index' }"
-              @click.prevent="logout"
-              class="nav-link"
-              >로그아웃</router-link
-            >
-          </li>
-        </template>
-        <template v-else>
-          <li class="nav-item">
-            <router-link :to="{ name: 'UserLogin' }" class="nav-link"
-              >로그인</router-link
-            >
-          </li>
-        </template>
-      </ul>
-    </div>
-  </nav>
+<header id="mu-header" class="" role="banner">
+		<div class="container">
+			<nav class="navbar navbar-default mu-navbar">
+		  <div class="container-fluid">
+		    <!-- Brand and toggle get grouped for better mobile display -->
+		    <div class="navbar-header">
+		      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+		        <span class="sr-only">Toggle navigation</span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		        <span class="icon-bar"></span>
+		      </button>
+
+		      <!-- Text Logo -->
+		      <RouterLink :to="{name:'index'}" class="navbar-brand" href="#">Bangu</RouterLink>
+
+		      <!-- Image Logo -->
+		      <!-- <a class="navbar-brand" href="#"><img src="@/assets/images/logo.png"></a> -->
+
+
+		    </div>
+
+		    <!-- Collect the nav links, forms, and other content for toggling -->
+		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1 custom-navbar">
+		      	<ul class="nav navbar-nav mu-menu navbar-right custom-navbar">
+			        <li><a href="#">로그인</a></li>
+			        <li><a href="#mu-about">회원가입</a></li>
+			        <li><a href="#mu-service">공지사항</a></li>
+		            <li><a href="#mu-portfolio">자유게시판</a></li>
+		            <li><a href="#mu-testimonials">로그아웃</a></li>
+		            <li><a href="#mu-contact">마이페이지</a></li>
+		      	</ul>
+		    </div><!-- /.navbar-collapse -->
+		  </div><!-- /.container-fluid -->
+		</nav>
+		</div>
+	</header>
 </template>
 
 <style scoped>
-@import "@/assets/css/login.css";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap');
+.custom-navbar {
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
 </style>
