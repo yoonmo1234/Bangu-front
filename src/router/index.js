@@ -27,11 +27,6 @@ const router = createRouter({
       redirect: "/user/login",
       children: [
         {
-          path: "login-new",
-          name: "UserLoginNew",
-          component: () => import("@/components/user/UserLoginNew.vue"),
-        },
-        {
           path: "login",
           name: "UserLogin",
           component: () => import("@/components/user/UserLogin.vue"),
