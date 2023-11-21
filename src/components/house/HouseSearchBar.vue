@@ -26,7 +26,7 @@ const {getSidoList} = houseStore;
 
 onMounted(() => {
     getSidoList();
-})
+});
 
 </script>
 

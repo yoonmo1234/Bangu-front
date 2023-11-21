@@ -3,6 +3,7 @@ import { ref, computed } from 'vue';
 
 // API Import
 import { getAddress } from "@/api/sido";
+import { getApartDealInfo } from "@/api/apart";
 
 export const useHouseStore = defineStore('house', () => {
     // State
@@ -23,12 +24,12 @@ export const useHouseStore = defineStore('house', () => {
     // Getters
     const isReadyToSearch = computed(() => selectedDong.value.code === "" ? false : true);
 
-        // if(selectedDong.value.code === "") {
-        //     return false;
-        // }else {
-        //     return true;
-        // }
-    
+    // if(selectedDong.value.code === "") {
+    //     return false;
+    // }else {
+    //     return true;
+    // }
+
 
     // Actions
 
@@ -69,7 +70,7 @@ export const useHouseStore = defineStore('house', () => {
                 data.regcodes.forEach((gugun) => {
                     // options.push({ text: gugun.name.split(" ")[1], value: gugun.code });
                     const list = gugun.name.split(" ");
-                    const addName  = list[list.length - 1];
+                    const addName = list[list.length - 1];
                     options.push({ text: addName, code: gugun.code });
                 });
                 gugunList.value = options;
@@ -80,7 +81,7 @@ export const useHouseStore = defineStore('house', () => {
     }
 
     function changeGugun() {
-        if(selectedDong.value.code !== ""){
+        if (selectedDong.value.code !== "") {
             selectedDong.value.code = "";
             selectedDong.value.text = "";
         }
@@ -96,7 +97,7 @@ export const useHouseStore = defineStore('house', () => {
                 let options = [...dongList.value];
                 data.regcodes.forEach((dong) => {
                     const list = dong.name.split(" ");
-                    const addName  = list[list.length - 1];
+                    const addName = list[list.length - 1];
                     options.push({ text: addName, code: dong.code });
                 });
                 dongList.value = options;
@@ -114,14 +115,40 @@ export const useHouseStore = defineStore('house', () => {
         // getCurrentLocation();
         // getApartList();
         // setMarkerList();
+        search();
+    }
+
+    function search() {
+        apartDealList.value = [];
+        // markerPositions.value = [];
+        // setTimeout(() => {
+        // }, 50)
+        getApartList();
     }
 
     // 내부 API
 
-    const getCurrentLocation = () =>  {
+    const getCurrentLocation = () => {
         var geocoder = new kakao.maps.services.Geocoder();
     }
 
+    const getApartList = async () => {
+        await getApartDealInfo({
+            serviceKey: import.meta.env.VITE_OPEN_API_SERVICE_KEY,
+            LAWD_CD: selectedGugun.value.code.substring(0, 5), //앞의 5개가 지역코드임
+            DEAL_YMD: 202301,
+        },
+            ({ data }) => {
+                // console.log("지역 코드 ", selectedGugun.value.code.substring(0, 5));
+                apartDealList.value = data.response.body.items.item;
+                // console.log("apartDealList.value",apartDealList.value);
+                // setMarkerList();
+            },
+            (err) => {
+                console.log(err);
+            }
+        );
+    }
     return {
         // State
         sidoList,

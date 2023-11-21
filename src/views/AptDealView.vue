@@ -32,13 +32,15 @@ const apts = ref([]);
 
 const data = [];
 
-watch(isReadyToSearch, () => {
-  if (isReadyToSearch.value) {
-    console.log("검색 준비 완료!");
-    getCurrentLocation();
-    getApartList();
-  }
-});
+// watch(isReadyToSearch, () => {
+//     if(isReadyToSearch.value) {
+//         console.log("검색 준비 완료!");
+//         getCurrentLocation();
+//         getApartList();
+//     }else {
+//         console.log("isReadyToSearch Watch 실행");
+//     }
+// })
 
 const getCurrentLocation = async () => {
   var geocoder = new kakao.maps.services.Geocoder();
@@ -75,6 +77,12 @@ const getApartList = async () => {
 };
 
 watch(apartDealList, async (ol, ne) => {
+  // apartDealList를 초기화 하는 거면 밑의 로직은 실행 안되게 하는 if문
+  if (apartDealList.value.length === 0) {
+    return;
+  }
+
+  // markerPositions.value = [];
   // const apts = [];
   var geocoder = new kakao.maps.services.Geocoder();
   let i = 1;
