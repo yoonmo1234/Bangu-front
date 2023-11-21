@@ -20,11 +20,6 @@ export const useMemberStore = defineStore("memberStore", () => {
   const userInfo = ref(null);
   const isValidToken = ref(false);
 
-  const logout = () => {
-    isLogin.value = false;
-    userInfo.value = false;
-  };
-
   const signUpUser = async (newUser) => {
     console.log(JSON.stringify(newUser));
     await join(
@@ -132,6 +127,7 @@ export const useMemberStore = defineStore("memberStore", () => {
 
   const userLogout = async (token) => {
     let decodeToken = jwtDecode(token);
+    console.log(decodeToken);
     await logout(
       decodeToken.userId,
       (response) => {
@@ -139,6 +135,8 @@ export const useMemberStore = defineStore("memberStore", () => {
           isLogin.value = false;
           userInfo.value = null;
           isValidToken.value = false;
+          //   sessionStorage.removeItem("accessToken");
+          //   sessionStorage.removeItem("refreshToken");
         } else {
           console.error("유저 정보 없음!!!!");
         }
@@ -158,7 +156,6 @@ export const useMemberStore = defineStore("memberStore", () => {
     getUserInfo,
     tokenRegenerate,
     userLogout,
-    logout,
     signUpUser,
   };
 });
