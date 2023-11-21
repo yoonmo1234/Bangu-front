@@ -46,23 +46,22 @@ const initMap = () => {
 }
 
 watch(
-  markerPositions,
-  (ol, ne) => {
-    // clearTimeout(debounce);
-    // debounce = setTimeout(() => {
-    //     if(markerPositions.value.length === 0) {
-    //       return;
-    //     }
-    //     else {
-    //      loadMarkers();
-    //     }
-    // },1000)
-        if(markerPositions.value.length === 0) {
-          return;
-        }
-        else {
-         loadMarkers();
-        }
+  ()=>markerPositions.value,
+  () => {
+    clearTimeout(debounce);
+    debounce = setTimeout(() => {
+      console.log("watch(markerPositions)");
+      loadMarkers();
+    },50)
+        // if(markerPositions.value.length === 0) {
+        //   return;
+        // }
+        // else {
+        //  loadMarkers();
+        // }
+  },
+  {
+    deep:true,
   }
 )
 

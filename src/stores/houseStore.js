@@ -108,23 +108,14 @@ export const useHouseStore = defineStore('house', () => {
     }
 
     function changeDong() {
-        // console.log("key : ", key)
-        // selectedDong.value.code = key.value;
-        // selectedDong.value.text = key.text;
-
-        // getCurrentLocation();
-        // getApartList();
-        // setMarkerList();
+        apartDealList.value = [];
+        markerPositions.value = [];
         search();
     }
 
     function search() {
-        markerPositions.value = [];
-        // markerPositions.value = [];
-        setTimeout(() => {
             console.log("search()");
             getApartList();
-        }, 1000)
     }
 
     // 내부 API
@@ -139,7 +130,6 @@ export const useHouseStore = defineStore('house', () => {
                     lat: result[0].y, // 위도
                     lng: result[0].x, // 경도
                 }
-                // let result = new kakao.maps.LatLng(result[0].y, result[0].x)
                 return curLatLng;
             }
             return null;
@@ -162,27 +152,23 @@ export const useHouseStore = defineStore('house', () => {
             202211,
             202212,
         ];
+        console.log("getApartList");
         let apartList = [];
-        for(let i =0; i<years.length;i++) {
+        // for(let i =0; i<years.length;i++) {
             await getApartDealInfo({
                 serviceKey: import.meta.env.VITE_OPEN_API_SERVICE_KEY,
                 LAWD_CD: selectedGugun.value.code.substring(0, 5), //앞의 5개가 지역코드임
-                DEAL_YMD: years[i],
+                // DEAL_YMD: years[i],
+                DEAL_YMD: 202301,
+                numOfRows:50,
             },
                 ({ data }) => {
-                    // console.log("data.response.body.items.item", data.response.body.items.item);
-                    // apartDealList.value = data.response.body.items.item;
-                    apartList.push(...data.response.body.items.item);
+                    apartDealList.value.push(...data.response.body.items.item);
                 },
                 (err) => {
                     console.log(err);
                 }
             );
-        }
-        setTimeout(() => {
-            console.log("apartList",apartList);
-            apartDealList.value = apartList;
-        },1000)
     } // getApartList End
 
 
