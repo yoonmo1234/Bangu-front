@@ -1,7 +1,9 @@
 import axios from "axios";
 
+
 const { VITE_VUE_API_URL, VITE_SIDO_GUGUN_DONG_URL, VITE_APART_DEAL_URL } =
   import.meta.env;
+
 
 // local vue api axios instance
 function localAxios() {
@@ -36,6 +38,7 @@ function sidoGugunDongAxios() {
   return instance;
 }
 
+
 // 아파트 매매 정보 얻어오는 axios 객체
 function apartDealAxios() {
   const instance = axios.create({
@@ -49,3 +52,4 @@ function apartDealAxios() {
 }
 
 export { localAxios, publicDataAxios, sidoGugunDongAxios, apartDealAxios };
+

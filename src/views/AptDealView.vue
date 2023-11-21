@@ -1,4 +1,5 @@
 <script setup>
+
 import { ref, onMounted, watch } from "vue";
 
 // Store Import
@@ -121,6 +122,7 @@ watch(apartDealList, async (ol, ne) => {
   }
   //   console.log("apt :", apts)
   markerPositions.value = apts.value;
+
 });
 </script>
 
@@ -130,3 +132,4 @@ watch(apartDealList, async (ol, ne) => {
 </template>
 
 <style scoped></style>
+

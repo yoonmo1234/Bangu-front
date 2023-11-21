@@ -1,4 +1,5 @@
 <script setup>
+
 import { ref, watch, computed, onMounted } from "vue";
 
 // Store Import
@@ -21,13 +22,16 @@ const positions = ref([]);
 const markers = ref([]);
 
 const props = defineProps({ markerList: Array, currentLocation: Object, });
+
 onMounted(() => {
   if (window.kakao && window.kakao.maps) {
     initMap();
   } else {
     const script = document.createElement("script");
+
     script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${import.meta.env.VITE_KAKAO_MAP_SERVICE_KEY
       }&libraries=services,clusterer`;
+
     /* global kakao */
     script.onload = () => kakao.maps.load(() => initMap());
     document.head.appendChild(script);
@@ -59,6 +63,7 @@ watch(
   }
 )
 
+
 const loadMarkers = () => {
   // 현재 표시되어있는 marker들이 있다면 map에 등록된 marker를 제거한다.
   deleteMarkers();
@@ -71,7 +76,9 @@ const loadMarkers = () => {
 
   // 마커를 생성합니다
   markers.value = [];
+
   markerPositions.value.forEach((position) => {
+
     const marker = new kakao.maps.Marker({
       map: map, // 마커를 표시할 지도
       position: position.latlng, // 마커를 표시할 위치
@@ -84,12 +91,15 @@ const loadMarkers = () => {
 
   // 4. 지도를 이동시켜주기
   // 배열.reduce( (누적값, 현재값, 인덱스, 요소)=>{ return 결과값}, 초기값);
+
   const bounds = markerPositions.value.reduce(
+
     (bounds, position) => bounds.extend(position.latlng),
     new kakao.maps.LatLngBounds()
   );
 
   map.setBounds(bounds);
+
 
 };
 
@@ -134,14 +144,17 @@ const deleteMarkers = () => {
   </ul> -->
 
   <div id="map"></div>
+
 </template>
 
 <style>
 #map {
   width: 100%;
+
   height:100vh;
 }
 #mu-header {
   position: static;
+
 }
 </style>
