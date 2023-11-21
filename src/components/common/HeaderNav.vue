@@ -43,7 +43,7 @@ const logout = async () => {
 		    <!-- Collect the nav links, forms, and other content for toggling -->
 		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1 custom-navbar">
 		      	<ul class="nav navbar-nav mu-menu navbar-right custom-navbar">
-			        <li><a href="#">로그인</a></li>
+			        <li><RouterLink :to="{name:'UserLogin'}" href="#">로그인</RouterLink></li>
 			        <li><a href="#mu-about">회원가입</a></li>
 			        <li><a href="#mu-service">공지사항</a></li>
 		            <li><a href="#mu-portfolio">자유게시판</a></li>

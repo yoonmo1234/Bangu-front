@@ -19,10 +19,12 @@ const {
     selectedGugun,
     selectedDong,
     apartDealList,
-    markerPositions
+    markerPositions,
+    noApartFlag,
 } = storeToRefs(houseStore);
 
-// const {getSidoList} = houseStore;
+const {getCurrentLocation} = houseStore;
+
 
 // Data
 const currentLocation = ref({});
@@ -31,30 +33,6 @@ const flag = ref(false);
 
 
 let debounce = null;
-// watch(isReadyToSearch, () => {
-//     if(isReadyToSearch.value) {
-//         console.log("검색 준비 완료!");
-//         getCurrentLocation();
-//         getApartList();
-//     }else {
-//         console.log("isReadyToSearch Watch 실행");
-//     }
-// })
-
-const getCurrentLocation = async () => {
-    var geocoder = new kakao.maps.services.Geocoder();
-    const addr = `${selectedSido.value.text} ${selectedGugun.value.text} ${selectedDong.value.text}`;
-    console.log("addr : ", addr);
-    await geocoder.addressSearch(addr, (result, status) => {
-        if (status === kakao.maps.services.Status.OK) {
-            const curLatLng = {
-                lat: result[0].y, // 위도
-                lng: result[0].x, // 경도
-            }
-            currentLocation.value = curLatLng;
-        }
-    });
-}
 
 const getApartList =  async () => {
      await getApartDealInfo({
@@ -80,9 +58,8 @@ watch(
       let apts = [];
       // apartDealList를 초기화 하는 거면 밑의 로직은 실행 안되게 하는 if문
       clearTimeout(debounce);
-      debounce = setTimeout(() => {
+      debounce = setTimeout(async () => {
 
-      },50)
       if(apartDealList.value.length === 0) {
         return;
       }
@@ -110,13 +87,21 @@ watch(
                 analyze_type: 'EXACT',
               });
           }
-          // if(i++ === size) {
-          //     flag.value = true;
-          // }
         }
-          markerPositions.value = apts;
+        // if(apts.length === 0) {
+        //   const pos = getCurrentLocation();
+        //   apts.push({
+        //     latlng:new kakao.maps.LatLng(pos.lat, pos.lng),
+        //     title:"아파트없음",
+        //   });
+        //   markerPositions.value = apts;
+        // }else {
+        //   markerPositions.value = apts;
+        // }
+        markerPositions.value = apts;
       }
 
+      },50)
     }
 )
 </script>

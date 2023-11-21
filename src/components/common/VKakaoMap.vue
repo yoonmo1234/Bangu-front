@@ -15,7 +15,6 @@ const {
   selectedSido,
   selectedGugun,
   selectedDong,
-
 } = storeToRefs(houseStore);
 
 var map;
@@ -52,14 +51,12 @@ watch(
     clearTimeout(debounce);
     debounce = setTimeout(() => {
         if(markerPositions.value.length === 0) {
-          deleteMarkers();
-          moveLocation();
           return;
         }
         else {
          loadMarkers();
         }
-    },50)
+    },1000)
   }
 )
 
@@ -107,22 +104,6 @@ const deleteMarkers = () => {
     });
   }
 };
-const moveLocation = async () => {
-        var geocoder = new kakao.maps.services.Geocoder();
-        const addr = `${selectedSido.value.text} ${selectedGugun.value.text} ${selectedDong.value.text}`;
-        console.log("addr : ", addr);
-        await geocoder.addressSearch(addr, (result, status) => {
-            if (status === kakao.maps.services.Status.OK) {
-                const curLatLng = {
-                    lat: result[0].y, // 위도
-                    lng: result[0].x, // 경도
-                }
-                // currentLocation.value = curLatLng;
-                map.panTo(curLatLng);
-            }
-        });
-    }
-
 </script>
 
 <template>
