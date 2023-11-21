@@ -11,6 +11,7 @@ import { getApartDealInfo } from "@/api/apart";
 // Component Import
 import VKakaoMap from '../components/common/VKakaoMap.vue';
 import HouseSearchBar from "../components/house/HouseSearchBar.vue";
+import SideInfoModal from "../components/house/SideInfoModal.vue";
 
 //Store
 const houseStore = useHouseStore();
@@ -93,6 +94,7 @@ watch(
 <template>
     <HouseSearchBar />
     <VKakaoMap />
+    <SideInfoModal />
 </template>
 
 <style scoped>

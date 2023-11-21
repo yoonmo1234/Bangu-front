@@ -16,6 +16,7 @@ const {
   selectedGugun,
   selectedDong,
 } = storeToRefs(houseStore);
+const {resetStore} = houseStore;
 
 var map;
 const positions = ref([]);
