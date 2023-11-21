@@ -54,11 +54,7 @@ const getCurrentLocation = async () => {
     }
   });
 };
-// watch(
-//     apartDealList,
-//     async () => {
 
-// })
 const getApartList = async () => {
   await getApartDealInfo(
     {
@@ -83,7 +79,6 @@ watch(apartDealList, async (ol, ne) => {
   var geocoder = new kakao.maps.services.Geocoder();
   let i = 1;
   const size = apartDealList.value.length;
-  console.log("size : ", size);
   for (const apt of apartDealList.value) {
     const len = selectedDong.value.text.split(" ").length;
     const dong = selectedDong.value.text.split(" ")[len - 1].trim();
@@ -104,12 +99,6 @@ watch(apartDealList, async (ol, ne) => {
               // lat : result[0].y,
               // lng : result[0].x,
             });
-
-            // markerList.value = apts;
-            // markerList.value.push({
-            //     lat : result[0].y,
-            //     lng : result[0].x,
-            // });
           }
         },
         {
@@ -117,7 +106,6 @@ watch(apartDealList, async (ol, ne) => {
         }
       );
     }
-    console.log("i : ", i);
     if (i++ === size) {
       console.log("for문 안에서 apts : ", apts.value);
       console.log("for문 안에서 apts : ", apts);
@@ -125,87 +113,13 @@ watch(apartDealList, async (ol, ne) => {
     }
   }
   //   console.log("apt :", apts)
-  //   markerPositions.value = apts;
+  markerPositions.value = apts.value;
 });
-watch(flag, () => {
-  if (flag.value) {
-    console.log("무한반복 체크");
-    console.log("apts : ", apts.value);
-    markerPositions.value = apts.value;
-    apts.value = []; // apts 초기화
-    flag.value = false;
-  }
-});
-// watch(apartDealList, () => {
-//     // markerList.value.clear()];
-//     markerList.value.splice(0,markerList.value.length);
-//     console.log("markerList.value : ", markerList.value);
-//     setMarkerList();
-// })
-// const setMarkerList =  async () => {
-//     const apts = [];
-//     var geocoder = new kakao.maps.services.Geocoder();
-
-//     for(const apt of apartDealList.value) {
-//         const len = selectedDong.value.text.split(" ").length;
-//         const dong = selectedDong.value.text.split(" ")[len-1].trim();
-//         if(apt['법정동'].trim() === dong) {
-//             // geocoder.addressSearch(apt['도로명'].trim(), (result, status) => {
-//                 let add = apt['중개사소재지'].trim() + " " + apt['법정동'].trim() + " " +  apt['지번'];
-//                 console.log("add : ", add);
-//             await geocoder.addressSearch(add, (result, status) => {
-//                 if (status === kakao.maps.services.Status.OK) {
-//                     // apts.push({
-//                     //     lat : result[0].y,
-//                     //     lng : result[0].x,
-//                     // });
-//                     // markerList.value = apts;
-//                     markerList.value.push({
-//                         lat : result[0].y,
-//                         lng : result[0].x,
-//                     });
-//                 }
-//             },
-//             {
-//                 analyze_type : 'EXACT',
-//             });
-//         }
-//     }
-// }
 </script>
 
 <template>
-  {{ isReadyToSearch }}
-  <!-- <v-select @update:modelValue="sidoChange" label="시도정보" :items="sidoList" :item-title="'text'" :item-value="'value'"
-            variant="solo-filled"></v-select>
-        <v-select @update:modelValue="gugunChange" label="구군정보" :items="gugunList" :item-title="'text'" :item-value="'value'"
-            variant="solo-filled"></v-select>
-        <v-select @update:modelValue="dongChange" label="법정동정보" :items="dongList" :item-title="'text'" :item-value="'value'" variant="solo-filled"></v-select> -->
-
   <HouseSearchBar />
-
-  <!-- <VSelect :selectOption="sidoList" @onKeySelect="sidoChange" />
-    <VSelect :selectOption="gugunList" @onKeySelect="gugunChange" />
-    <VSelect :selectOption="dongList" @onKeySelect="dongChange" /> -->
-
-  <!-- <VSelect :selectOption="dongList"/> -->
-  <!-- <select v-model="selected.sido" name="asdf" id="asdf">
-            <option  v-for="(list) in sidoList" :key="list.value" :value="list.value">{{ list.text }}</option>
-        </select>
-        <select name="asdf" id="asdf">
-            <option v-for="(list) in sidoList" :key="list.value" :value="list.value">{{ list.text }}</option>
-        </select>
-        <select name="asdf" id="asdf">
-            <option v-for="(list) in sidoList" :key="list.value" :value="list.value">{{ list.text }}</option>
-        </select> -->
-
   <VKakaoMap :currentLocation="currentLocation" :markerList="markerList" />
 </template>
 
-<style scoped>
-.tmp {
-  width: 1000px;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  position: absolute !;
-}
-</style>
+<style scoped></style>
