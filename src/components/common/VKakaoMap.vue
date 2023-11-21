@@ -33,39 +33,6 @@ onMounted(() => {
   }
 });
 
-// watch(
-//   markerPositions,
-//   (ol ,ne) =>  {
-//     console.log("ol : ", ol);
-//     console.log("ne : ", ne);
-//     positions.value = ol.value;
-//     loadMarkers();
-
-//   }
-// )
-
-// watch(
-//   () => props.currentLocation,
-//   () => {
-//     // 이동할 위도 경도 위치를 생성합니다
-//     var moveLatLon = new kakao.maps.LatLng(
-//       props.currentLocation.lat,
-//       props.currentLocation.lng
-//     );
-
-//     // 지도 중심을 부드럽게 이동시킵니다
-//     // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
-//     map.panTo(moveLatLon);
-//     // map.panTo(moveLatLon);
-//     // var marker = new kakao.maps.Marker({
-//     //   map: map,
-//     //   position: new kakao.maps.LatLng(props.currentLocation.lat, map.getCenter().getLng()),
-//     // });
-//     // marker.setMap(map);
-//   },
-//   { deep: true }
-// );
-
 const initMap = () => {
   const container = document.getElementById("map");
   const options = {
@@ -81,9 +48,11 @@ watch(
   markerPositions,
   () => {
     setTimeout(() => {
-      console.log("positions 감시")
-      console.log("watch : " ,markerPositions.value);
-      loadMarkers();
+      if(markerPositions.value.length === 0){
+        return;
+      }else {
+        loadMarkers();
+      }
     }, 100);
   }
 )
@@ -123,6 +92,7 @@ const loadMarkers = () => {
 };
 
 const deleteMarkers = () => {
+  console.log("deleteMarkers");
   if (markers.value.length > 0) {
     markers.value.forEach((marker) => marker.setMap(null));
   }
