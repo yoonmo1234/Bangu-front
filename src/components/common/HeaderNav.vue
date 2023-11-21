@@ -45,6 +45,7 @@ const logout = async () => {
 		      	<ul class="nav navbar-nav mu-menu navbar-right custom-navbar">
 			        <li><RouterLink :to="{name:'UserLogin'}" href="#">로그인</RouterLink></li>
 			        <li><a href="#mu-service">공지사항</a></li>
+			        <li><RouterLink :to="{name:'rent-room'}">양도방보기</RouterLink></li>
 
 					<!-- 로그인시 보일 거 -->
 		            <li><a href="#mu-portfolio">원룸 양도</a></li>

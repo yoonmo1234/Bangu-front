@@ -73,6 +73,11 @@ const router = createRouter({
       name: "apt-deal",
       component: import("@/views/AptDealView.vue"),
     },
+    {
+      path:"/rent-room",
+      name:"rent-room",
+      component:import("@/views/RentView.vue"),
+    },
   ],
 });
 
