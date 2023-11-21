@@ -119,18 +119,33 @@ export const useHouseStore = defineStore('house', () => {
     }
 
     function search() {
-        apartDealList.value = [];
+        markerPositions.value = [];
         // markerPositions.value = [];
-        // setTimeout(() => {
-        // }, 50)
-        getApartList();
+        setTimeout(() => {
+            console.log("search()");
+            getApartList();
+        }, 100)
     }
 
     // 내부 API
 
-    const getCurrentLocation = () => {
+    const getCurrentLocation = async () => {
         var geocoder = new kakao.maps.services.Geocoder();
+        const addr = `${selectedSido.value.text} ${selectedGugun.value.text} ${selectedDong.value.text}`;
+        console.log("addr : ", addr);
+        await geocoder.addressSearch(addr, (result, status) => {
+            if (status === kakao.maps.services.Status.OK) {
+                const curLatLng = {
+                    lat: result[0].y, // 위도
+                    lng: result[0].x, // 경도
+                }
+                currentLocation.value = curLatLng;
+            }
+        });
     }
+
+
+
 
     const getApartList = async () => {
         await getApartDealInfo({
@@ -139,10 +154,8 @@ export const useHouseStore = defineStore('house', () => {
             DEAL_YMD: 202301,
         },
             ({ data }) => {
-                // console.log("지역 코드 ", selectedGugun.value.code.substring(0, 5));
+                console.log("data.response.body.items.item", data.response.body.items.item);
                 apartDealList.value = data.response.body.items.item;
-                // console.log("apartDealList.value",apartDealList.value);
-                // setMarkerList();
             },
             (err) => {
                 console.log(err);
