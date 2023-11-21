@@ -3,7 +3,13 @@ import { useRouter } from "vue-router";
 import { defineStore } from "pinia";
 import { jwtDecode } from "jwt-decode";
 
-import { userConfirm, findById, tokenRegeneration, logout } from "@/api/user";
+import {
+  userConfirm,
+  findById,
+  tokenRegeneration,
+  logout,
+  join,
+} from "@/api/user";
 import { httpStatusCode } from "@/util/http-status";
 
 export const useMemberStore = defineStore("memberStore", () => {
@@ -18,6 +24,24 @@ export const useMemberStore = defineStore("memberStore", () => {
     isLogin.value = false;
     userInfo.value = false;
   };
+
+  const signUpUser = async (newUser) => {
+    console.log(JSON.stringify(newUser));
+    await join(
+      JSON.stringify(newUser),
+      (response) => {
+        if (response.status === httpStatusCode.CREATE) {
+          alert("회원가입이 완료되었습니다.");
+        } else {
+          alert("회원가입에 실패하셨습니다.");
+        }
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  };
+
   const userLogin = async (loginUser) => {
     await userConfirm(
       //토큰 유효성 확인 함수
@@ -135,5 +159,6 @@ export const useMemberStore = defineStore("memberStore", () => {
     tokenRegenerate,
     userLogout,
     logout,
+    signUpUser,
   };
 });
