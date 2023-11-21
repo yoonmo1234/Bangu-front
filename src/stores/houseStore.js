@@ -124,7 +124,7 @@ export const useHouseStore = defineStore('house', () => {
         setTimeout(() => {
             console.log("search()");
             getApartList();
-        }, 100)
+        }, 1000)
     }
 
     // 내부 API

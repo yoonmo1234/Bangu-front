@@ -44,11 +44,11 @@ const logout = async () => {
 		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1 custom-navbar">
 		      	<ul class="nav navbar-nav mu-menu navbar-right custom-navbar">
 			        <li><RouterLink :to="{name:'UserLogin'}" href="#">로그인</RouterLink></li>
-			        <li><a href="#mu-about">회원가입</a></li>
 			        <li><a href="#mu-service">공지사항</a></li>
-		            <li><a href="#mu-portfolio">자유게시판</a></li>
+
+					<!-- 로그인시 보일 거 -->
+		            <li><a href="#mu-portfolio">원룸 양도</a></li>
 		            <li><a href="#mu-testimonials">로그아웃</a></li>
-		            <li><a href="#mu-contact">마이페이지</a></li>
 		      	</ul>
 		    </div><!-- /.navbar-collapse -->
 		  </div><!-- /.container-fluid -->

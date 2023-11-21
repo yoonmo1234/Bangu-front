@@ -48,15 +48,21 @@ const initMap = () => {
 watch(
   markerPositions,
   (ol, ne) => {
-    clearTimeout(debounce);
-    debounce = setTimeout(() => {
+    // clearTimeout(debounce);
+    // debounce = setTimeout(() => {
+    //     if(markerPositions.value.length === 0) {
+    //       return;
+    //     }
+    //     else {
+    //      loadMarkers();
+    //     }
+    // },1000)
         if(markerPositions.value.length === 0) {
           return;
         }
         else {
          loadMarkers();
         }
-    },1000)
   }
 )
 
@@ -91,7 +97,6 @@ const loadMarkers = () => {
   );
 
   map.setBounds(bounds);
-
 };
 
 const deleteMarkers = () => {

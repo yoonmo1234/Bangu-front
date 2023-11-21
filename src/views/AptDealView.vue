@@ -98,7 +98,9 @@ watch(
         // }else {
         //   markerPositions.value = apts;
         // }
-        markerPositions.value = apts;
+        setTimeout(() => {
+          markerPositions.value = apts;
+        },1000)
       }
 
       },50)
