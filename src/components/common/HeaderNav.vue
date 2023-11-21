@@ -1,12 +1,20 @@
 <script setup>
-// import { useUserStore } from "@/stores/user";
 import { storeToRefs } from "pinia";
 import { useMemberStore } from "@/stores/member";
-// const storeUser = useUserStore();
-// const { userInfo } = storeToRefs(storeUser);
-// const { logout } = storeUser;
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 const memberStore = useMemberStore();
-const { isLogin, logout } = memberStore;
+const { isLogin } = storeToRefs(memberStore);
+const { userLogout } = memberStore;
+
+const logout = async () => {
+  let token = sessionStorage.getItem("accessToken");
+  await userLogout(token);
+  sessionStorage.removeItem("accessToken");
+  sessionStorage.removeItem("refreshToken");
+  router.push({ name: "index" });
+};
 </script>
 
 <template>
