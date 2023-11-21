@@ -4,31 +4,51 @@ import { ref } from "vue";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 import { useMemberStore } from "@/stores/member";
-// import { useMenuStore } from "@/stores/menu";
 
 const router = useRouter();
-
 const memberStore = useMemberStore();
-
 const { isLogin } = storeToRefs(memberStore);
-const { userLogin, getUserInfo } = memberStore;
-// const { changeMenuState } = useMenuStore();
+const { userLogin, getUserInfo, signUpUser } = memberStore;
 
 const loginUser = ref({
   userId: "",
   userPwd: "",
 });
 
+const newUser = ref({
+  userId: "",
+  userPwd: "",
+  userName: "",
+  email: "",
+  emailId: "",
+  emailDomain: "",
+});
+
 const login = async () => {
+  console.log("sign in");
   await userLogin(loginUser.value);
   let token = sessionStorage.getItem("accessToken");
-  if (isLogin) {
+  if (isLogin.value) {
     getUserInfo(token);
-    memberStore.isLogin = true;
+    isLogin.value = true;
     // changeMenuState();
   }
-  router.push("/");
+  router.push({ name: "index" });
 };
+
+const signUp = async () => {
+  console.log("sign up");
+  let emailInfo = newUser.value.email.split("@");
+  newUser.value.emailId = emailInfo[0];
+  newUser.value.emailDomain = emailInfo[1];
+  delete newUser.value.email;
+
+  console.log(newUser);
+
+  await signUpUser(newUser.value);
+  router.push({ name: "index" });
+};
+
 onMounted(() => {
   const signUpButton = document.getElementById("signUp");
   const signInButton = document.getElementById("signIn");
@@ -47,7 +67,7 @@ onMounted(() => {
   <!-- <h2>Weekly Coding Challenge #1: Sign in/up Form</h2> -->
   <div class="container" id="container">
     <div class="form-container sign-up-container">
-      <form action="#">
+      <div class="form">
         <h1>Create Account</h1>
         <div class="social-container">
           <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
@@ -55,15 +75,18 @@ onMounted(() => {
           <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
         </div>
         <span>or use your email for registration</span>
-        <input type="text" placeholder="Id" />
-        <input type="text" placeholder="Name" />
-        <input type="email" placeholder="Email" />
-        <input type="password" placeholder="Password" />
-        <button>Sign Up</button>
-      </form>
+        <input type="text" placeholder="Id" v-model="newUser.userId" />
+        <input type="text" placeholder="Name" v-model="newUser.userName" />
+        <input type="email" placeholder="Email" v-model="newUser.email" />
+        <input
+          type="password"
+          placeholder="Password"
+          v-model="newUser.userPwd" />
+        <button @click="signUp">Sign Up</button>
+      </div>
     </div>
     <div class="form-container sign-in-container">
-      <form action="#">
+      <div class="form">
         <h1>Sign in</h1>
         <div class="social-container">
           <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
@@ -71,14 +94,14 @@ onMounted(() => {
           <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
         </div>
         <span>or use your account</span>
-        <input type="text" laceholder="Id" v-model="loginUser.userId" />
+        <input type="text" placeholder="Id" v-model="loginUser.userId" />
         <input
           type="password"
           placeholder="Password"
           v-model="loginUser.userPwd" />
         <a href="#">Forgot your password?</a>
         <button @click="login">Sign In</button>
-      </form>
+      </div>
     </div>
     <div class="overlay-container">
       <div class="overlay">
@@ -169,7 +192,7 @@ button.ghost {
   border-color: #ffffff;
 }
 
-form {
+.form {
   background-color: #ffffff;
   display: flex;
   align-items: center;
