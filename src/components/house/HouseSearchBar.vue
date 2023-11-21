@@ -31,9 +31,21 @@ onMounted(() => {
 </script>
 
 <template>
-    <VSelect type="sido" :selectOption="sidoList" @onKeySelect="changeSido" />
-    <VSelect type="gugun" :selectOption="gugunList" @onKeySelect="gugunChange" />
-    <VSelect type="dong" :selectOption="dongList" @onKeySelect="dongChange" />
+        <div class="vselect-container">
+            <VSelect type="sido" :selectOption="sidoList" @onKeySelect="changeSido" />
+            <VSelect type="gugun" :selectOption="gugunList" @onKeySelect="gugunChange" />
+            <VSelect type="dong" :selectOption="dongList" @onKeySelect="dongChange" />
+        </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.vselect-container {
+    position: absolute;
+    left : 150px;
+    top : 180px;
+    z-index: 3;
+    /* display: flex; */
+    /* background-color: white; */
+    /* width:400px; */
+}
+</style>

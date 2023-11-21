@@ -80,9 +80,12 @@ export const useHouseStore = defineStore('house', () => {
     }
 
     function changeGugun() {
-        selectedDong.value.code = "";
-        selectedDong.value.text = "";
+        if(selectedDong.value.code !== ""){
+            selectedDong.value.code = "";
+            selectedDong.value.text = "";
+        }
         dongList.value = [{ text: "법정동 선택", code: "" }];
+
         // 구군 정보가 불러와졌다면 동 정보 불러오기
         getAddress({
             regcode_pattern: selectedGugun.value.code.substr(0, 5) + "*",

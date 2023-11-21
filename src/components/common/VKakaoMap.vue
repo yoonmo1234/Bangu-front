@@ -11,8 +11,7 @@ const houseStore = useHouseStore();
 const {
   // State
   markerPositions,
-  apartDealList,
-  selectedDong,
+
 } = storeToRefs(houseStore);
 
 var map;
@@ -81,17 +80,13 @@ const initMap = () => {
 watch(
   markerPositions,
   () => {
-    console.log("positions 감시")
-    console.log("watch : " ,markerPositions.value);
+    setTimeout(() => {
+      console.log("positions 감시")
+      console.log("watch : " ,markerPositions.value);
+      loadMarkers();
+    }, 100);
   }
 )
-
-const loadMarkers2 = () => {
-  // 현재 표시되어있는 marker들이 있다면 map에 등록된 marker를 제거한다.
-
-
-  // 마커를 생성합니다
-}
 
 const loadMarkers = () => {
   // 현재 표시되어있는 marker들이 있다면 map에 등록된 marker를 제거한다.
@@ -134,34 +129,34 @@ const deleteMarkers = () => {
 };
 
 
-function test() {
-  console.log("props.markerList", markerPositions);
-  console.log("markers", markers.value);
-  console.log("positions", positions.value);
-}
-function test2() {
-  positions.value = [];
-  console.log("markerPositions",markerPositions.value);
-  // props.markerList.forEach((apart) => {
-  markerPositions.value.forEach((apart) => {
-    let obj = {};
-    obj.latlng = new kakao.maps.LatLng(apart.lat, apart.lng);
-    obj.title = apart.statNm;
+// function test() {
+//   console.log("props.markerList", markerPositions);
+//   console.log("markers", markers.value);
+//   console.log("positions", positions.value);
+// }
+// function test2() {
+//   positions.value = [];
+//   console.log("markerPositions",markerPositions.value);
+//   // props.markerList.forEach((apart) => {
+//   markerPositions.value.forEach((apart) => {
+//     let obj = {};
+//     obj.latlng = new kakao.maps.LatLng(apart.lat, apart.lng);
+//     obj.title = apart.statNm;
 
-    positions.value.push(obj);
-  });
-  console.log("positions : ", positions.value);
-  loadMarkers();
-}
+//     positions.value.push(obj);
+//   });
+//   console.log("positions : ", positions.value);
+//   loadMarkers();
+// }
 </script>
 
 <template>
-  <button class="btn" @click="test">markerList 출력</button>
-  <button class="btn" @click="test2">아파트매물검색</button>
+  <!-- <button class="btn" @click="">markerList 출력</button>
+  <button class="btn" @click="">아파트매물검색</button> -->
 
-  <ul>
+  <!-- <ul>
     <li v-for="(item) in markerPositions" :key="item.title">{{ item.title }}</li>
-  </ul>
+  </ul> -->
 
   <div id="map"></div>
 </template>
@@ -169,6 +164,9 @@ function test2() {
 <style>
 #map {
   width: 100%;
-  height: 800px;
+  height:100vh;
+}
+#mu-header {
+  position: static;
 }
 </style>
