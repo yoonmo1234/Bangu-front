@@ -1,4 +1,5 @@
 import { localAxios } from "@/util/http-commons";
+// import { LayoutPlugin } from "bootstrap-vue";
 
 const local = localAxios();
 
@@ -21,5 +22,7 @@ async function tokenRegeneration(user, success, fail) {
 async function logout(userid, success, fail) {
   await local.get(`/user/logout/${userid}`).then(success).catch(fail);
 }
-
-export { userConfirm, findById, tokenRegeneration, logout };
+async function join(user, success, fail) {
+  await local.post(`/user/join`, user).then(success).catch(fail);
+}
+export { userConfirm, findById, tokenRegeneration, logout, join };
