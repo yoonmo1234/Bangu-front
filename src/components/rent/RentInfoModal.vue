@@ -1,34 +1,36 @@
 <script setup>
-import { ref, watch, computed } from "vue";
-import { useHouseStore } from '@/stores/houseStore';
+import { ref, watch, computed, defineProps, defineEmits } from "vue";
+import { useRentStore } from '@/stores/rentStore';
 import { storeToRefs } from 'pinia';
+
+
+const props = defineProps({toggle:Boolean});
+const emit = defineEmits(['toggleToFalse']);
 
 //Store
 const rentStore = useRentStore();
 const {
     rentRoomList,
 } = storeToRefs(rentStore);
-const toggle = ref(true);
 
 const a = computed(() => apartDealList.value);
 watch(
-    selectedDong.value,
+    ()=>props.toggle,
     () => {
-        console.log(" 실행됨")
-        console.log(apartDealList.value);
-        if (selectedDong.code !== "") {
-            openNav();
+        console.log("rentInfoModal watch 실행됨")
+        if (props.toggle) {
+    document.getElementById("mySidenav").style.width = "500px";
         } else {
-            closeNav();
+    document.getElementById("mySidenav").style.width = "0";
         }
+    },
+    {
+        deep:true,
     }
 )
-function openNav() {
-    document.getElementById("mySidenav").style.width = "500px";
-}
 
 function closeNav() {
-    document.getElementById("mySidenav").style.width = "0";
+    emit('toggleToFalse', false);
 }
 </script>
 
@@ -53,7 +55,8 @@ function closeNav() {
                             <ul class="error-prompt-list" role="list">
                                 <li>보증금 : : {{ item['deposit'] }}</li>
                                 <li>월세: {{ item['monthly'] }}</li>
-                                <li>메모: {{ item['comment'] }},000</li>
+                                <!-- <li>메모: {{ item['comment'] }}</li> -->
+                                <li>유저: {{ item['userId'] }}</li>
                             </ul>
                         </div>
                     </div>
@@ -68,7 +71,7 @@ function closeNav() {
     border-radius: 5px;
     height: 750px;
     width: 0;
-    /* width:400px; */
+    /* width:500px; */
     position: fixed;
     z-index: 5;
     top: 150px;

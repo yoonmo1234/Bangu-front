@@ -109,7 +109,7 @@ export const useRentStore = defineStore('rent', () => {
     }
 
     const getRentRoomList = async (params) => {
-        console.log("params: " ,JSON.stringify(params));
+        // console.log("params: " ,JSON.stringify(params));
         await searchRentRoom(
             // {
             //     deposit:0,
@@ -122,9 +122,8 @@ export const useRentStore = defineStore('rent', () => {
             // },
             params,
             ({data})=>{
-                console.log("data : ", data);
+                // console.log("data : ", data);
                 data.forEach((item)=> {
-                    console.log("item" , item);
                     rentRoomList.value.push(item);
                 });
             },

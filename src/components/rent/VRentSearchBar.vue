@@ -1,6 +1,6 @@
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, defineEmits, defineProps} from 'vue';
 
 // Store Import
 import { storeToRefs } from 'pinia';
@@ -9,7 +9,8 @@ import { useRentStore } from '@/stores/rentStore';
 // Component Import
 import VSelect from "@/components/common/VSelectRent.vue";
 
-
+const emit = defineEmits(['toggleUpdate']);
+const props = defineProps({toggle:Boolean});
 
 const rentStore = useRentStore();
 const {
@@ -32,6 +33,7 @@ const { getSidoList, search } = rentStore;
   const startDate = ref("");
   const options = ref([]);
 
+
 onMounted(() => {
     getSidoList();
 });
@@ -44,6 +46,7 @@ const sendData = () => {
       startDate:startDate.value,
       options:options.value,
     });
+    emit('toggleUpdate', true);
 }
 
 </script>
