@@ -121,17 +121,17 @@ export const useHouseStore = defineStore('house', () => {
     const getApartList = async () => {
         let years = [
             202201,
-            202202,
-            202203,
+            // 202202,
+            // 202203,
             // 202204,
             // 202205,
             // 202206,
             // 202207,
             // 202208,
             // 202209,
-            202210,
-            202211,
-            202212,
+            // 202210,
+            // 202211,
+            // 202212,
         ];
         console.log("getApartList");
         let apartList = [];

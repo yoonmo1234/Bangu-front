@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch,computed } from "vue";
+import { ref, watch, computed } from "vue";
 import { useHouseStore } from '@/stores/houseStore';
 import { storeToRefs } from 'pinia';
 
@@ -25,7 +25,7 @@ watch(
     }
 )
 function openNav() {
-    document.getElementById("mySidenav").style.width = "400px";
+    document.getElementById("mySidenav").style.width = "500px";
 }
 
 function closeNav() {
@@ -36,12 +36,37 @@ function closeNav() {
 <template>
     <div id="mySidenav" class="sidenav">
         <button class="closebtn" @click="closeNav">&times;</button>
-        <div v-for="(item, index) in apartDealList" :key="index" class="card">
+        <!-- <div v-for="(item, index) in apartDealList" :key="index" class="card">
             <div class="container">
                 <h4><b>{{ item['아파트'] }}</b></h4>
                 <p>주소 : {{ item['중개사소재지'] }}</p>
                 <p> 건축년도{{ item['건축년도'] }}</p>
                 <p> 거래금액{{ item['거래금액'] }},000</p>
+            </div>
+        </div> -->
+        <div class="notifications-container">
+            <div  v-for="(item, index) in apartDealList" :key="index" class="error-alert">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <svg aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                            class="error-svg">
+                            <path clip-rule="evenodd"
+                                d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                                fill-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <div class="error-prompt-container">
+                        <p class="error-prompt-heading">{{ item['아파트'] }}
+                        </p>
+                        <div class="error-prompt-wrap">
+                            <ul class="error-prompt-list" role="list">
+                                <li>주소: {{ item['중개사소재지'] }}</li>
+                                <li>건축년도: {{ item['건축년도'] }}</li>
+                                <li>거래금액: {{ item['거래금액'] }},000</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -62,6 +87,8 @@ function closeNav() {
     transition: 0.5s;
     overflow-y: scroll;
     padding-top: 40px;
+    display: flex;
+    justify-content: center;
 }
 
 .sidenav a {
@@ -81,8 +108,8 @@ function closeNav() {
     color: white;
     position: absolute;
     top: 0;
-    right: 25px;
-    font-size: 36px;
+    right: 430px;
+    font-size: 30px;
     margin-left: 50px;
 }
 
@@ -102,5 +129,70 @@ function closeNav() {
 
 .container {
     padding: 2px 16px;
+}
+
+
+/*  */
+
+
+.notifications-container {
+  width: 400px;
+  height: auto;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-shrink-0 {
+  flex-shrink: 0;
+}
+
+.error-alert {
+  border-radius: 0.375rem;
+  /* padding: 1rem; */
+  padding:20px 0;
+  background-color: rgb(254 242 242);
+  margin:10px 0;
+  margin-left: 10px;
+  width:380px;
+  padding-left:20px;
+}
+
+.error-svg {
+  color: #F87171;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.error-prompt-heading {
+  color: #991B1B;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: bold;
+}
+
+.error-prompt-container {
+  display: flex;
+  flex-direction: column;
+  margin-left: 1.25rem;
+}
+
+.error-prompt-wrap {
+  margin-top: 0.5rem;
+  color: #B91C1C;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.error-prompt-list {
+  padding-left: 1.25rem;
+  margin-top: 0.25rem;
+  list-style-type: disc;
 }
 </style>

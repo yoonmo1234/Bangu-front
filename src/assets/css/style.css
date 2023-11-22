@@ -38,6 +38,16 @@ Version: 1.0
 	src: url("../fonts/SuperMario256.ttf") format("truetype");
 	font-weight: normal;
   } /* 이후 "SDGothic"으로 폰트 적용 가능 */
+:root {
+  --sz: 10px;
+  --szm: calc(var(--sz) / 10);
+  --tr: all 0.5s ease 0s;
+  --on: #2196f3;
+  --lg: #fff0;
+  --bg1: #ededed;
+  --bg2: #e3e3e3;
+  --bg3: #bdbdbd;
+}	
 body,
 html {
 	overflow-x:hidden;
@@ -256,12 +266,11 @@ button:focus {
 /*--------------------*/
 /* HEADER */
 /*--------------------*/
-
 #mu-header {
 	display: inline;
 	float: left;
 	width: 100%;
-	position: absolute;
+	position: static;
 	left: 0;
 	right: 0;
 	top: 0;

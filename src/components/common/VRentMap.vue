@@ -111,10 +111,10 @@ const deleteMarkers = () => {
   <div id="map"></div>
 </template>
 
-<style>
+<style scoped>
 #map {
   width: 100%;
-  height:100vh;
+  height:800px;
 }
 #mu-header {
   position: static;
