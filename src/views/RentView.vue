@@ -9,7 +9,7 @@ import {storeToRefs } from 'pinia';
 import { getApartDealInfo } from "@/api/apart";
 
 // Component Import
-import VKakaoMap from '../components/common/VKakaoMap.vue';
+import VRentMap from '../components/common/VKakaoMap.vue';
 import HouseSearchBar from "../components/house/HouseSearchBar.vue";
 import VRentSearchBar from "../components/rent/VRentSearchBar.vue";
 
@@ -19,12 +19,10 @@ const {
     selectedSido,
     selectedGugun,
     selectedDong,
-    // apartDealList,
-    // markerPositions,
+    rentRoomList,
 } = storeToRefs(rentStore);
 
 // const {getCurrentLocation} = houseStore;
-
 
 // Data
 
@@ -34,7 +32,17 @@ let debounce = null;
 </script>
 
 <template>
+    <ul v-for="(list, index) in rentRoomList" :key="index">
+        <li> userId : {{ list.userId }}</li>
+        <li> lat : {{ list.lat }}</li>
+        <li> lng : {{ list.lat }}</li>
+        <li> lat : {{ list.lat }}</li>
+        <li> lat : {{ list.lat }}</li>
+        <li> lat : {{ list.lat }}</li>
+    </ul>
+    
     <VRentSearchBar />
+    <VRentMap />
     <!-- <VKakaoMap /> -->
     <!-- <SideInfoModal /> -->
 </template>

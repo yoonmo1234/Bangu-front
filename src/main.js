@@ -5,7 +5,9 @@ import App from "./App.vue";
 import router from "./router";
 
 // import '@/style.css';
-
+import "@/assets/css/bootstrap.min.css";
+import "@/assets/css/theme-color/default-theme.css";
+import "@/assets/css/style.css"
 // Vuetify
 import "vuetify/styles";
 import { createVuetify } from "vuetify";
