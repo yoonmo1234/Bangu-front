@@ -12,7 +12,7 @@ export const useRoomStore = defineStore("roomStore", () => {
     await roomTransfer(
       JSON.stringify(room),
       (response) => {
-        if (response.status === httpStatusCode.CREATE) {
+        if (response.status === httpStatusCode.OK) {
           alert("등록이 완료되었습니다.");
           router.push({ name: "rent-room" });
         } else {
