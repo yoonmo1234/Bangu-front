@@ -121,181 +121,183 @@ const initMap = () => {
 </script>
 
 <template>
-  <dib id="map"></dib>
-  <div class="registration-form">
-    <h2>원룸 양도 등록</h2>
-    <div class="form-group-set">
-      <div class="form-column">
-        <div class="form-group">
-          <label for="subject">제목 Subject:</label>
-          <input
-            type="text"
-            id="subject"
-            name="subject"
-            v-model="roomInfo.subject"
-            required />
+  <div class="room-content" style="display: flex; justify-content: center; margin-bottom: 5%;box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+    <div id="map" style="width:600px;height: auto;"></div>
+    <div class="registration-form">
+      <h2>원룸 양도 등록</h2>
+      <div class="form-group-set">
+        <div class="form-column">
+          <div class="form-group">
+            <label for="subject">제목 Subject:</label>
+            <input
+              type="text"
+              id="subject"
+              name="subject"
+              v-model="roomInfo.subject"
+              required />
+          </div>
+
+          <div class="form-group">
+            <label for="comment">장점 Comment:</label>
+            <textarea
+              id="comment"
+              name="comment"
+              rows="4"
+              v-model="roomInfo.comment"
+              required></textarea>
+          </div>
+          <div class="form-group">
+            <label for="subject">주소 Address:</label>
+            <input
+              type="text"
+              id="address"
+              name="address"
+              v-model="address"
+              required />
+          </div>
+          <div class="form-group">
+            <label for="deposit">보증금 Deposit:</label>
+            <input
+              type="number"
+              id="deposit"
+              name="deposit"
+              v-model="roomInfo.deposit"
+              required />
+          </div>
+
+          <div class="form-group">
+            <label for="monthlyRent">월세 Monthly Rent:</label>
+            <input
+              type="number"
+              id="monthlyRent"
+              name="monthlyRent"
+              v-model="roomInfo.monthly"
+              required />
+          </div>
         </div>
 
-        <div class="form-group">
-          <label for="comment">장점 Comment:</label>
-          <textarea
-            id="comment"
-            name="comment"
-            rows="4"
-            v-model="roomInfo.comment"
-            required></textarea>
-        </div>
-        <div class="form-group">
-          <label for="subject">주소 Address:</label>
-          <input
-            type="text"
-            id="address"
-            name="address"
-            v-model="address"
-            required />
-        </div>
-        <div class="form-group">
-          <label for="deposit">보증금 Deposit:</label>
-          <input
-            type="number"
-            id="deposit"
-            name="deposit"
-            v-model="roomInfo.deposit"
-            required />
+        <div class="form-column">
+          <div class="form-group">
+            <label for="startDate">임대 시작 희망일 Start Date:</label>
+            <input
+              type="date"
+              id="startDate"
+              name="startDate"
+              v-model="roomInfo.startDate"
+              required />
+          </div>
+
+          <div class="form-group">
+            <label for="endDate">임대 종료 희망일 End Date:</label>
+            <input
+              type="date"
+              id="endDate"
+              name="endDate"
+              v-model="roomInfo.endDate"
+              required />
+          </div>
+
+          <div class="form-group options-group">
+            <label
+              ><input
+                type="checkbox"
+                id="bed"
+                name="bed"
+                value="1"
+                v-model="roomInfo.options" />
+              Bed</label
+            >
+            <label
+              ><input
+                type="checkbox"
+                id="refrigerator"
+                name="refrigerator"
+                value="2"
+                v-model="roomInfo.options" />
+              Refrigerator</label
+            >
+            <label
+              ><input
+                type="checkbox"
+                id="microwave"
+                name="microwave"
+                value="3"
+                v-model="roomInfo.options" />
+              Microwave</label
+            >
+            <label
+              ><input
+                type="checkbox"
+                id="internet"
+                name="internet"
+                value="4"
+                v-model="roomInfo.options" />
+              Internet</label
+            >
+            <label
+              ><input
+                type="checkbox"
+                id="washer"
+                name="washer"
+                value="5"
+                v-model="roomInfo.options" />
+              Washer</label
+            >
+            <label
+              ><input
+                type="checkbox"
+                id="desk"
+                name="desk"
+                value="6"
+                v-model="roomInfo.options" />
+              Desk</label
+            >
+            <label
+              ><input
+                type="checkbox"
+                id="chair"
+                name="chair"
+                value="7"
+                v-model="roomInfo.options" />
+              Chair</label
+            >
+
+            <label
+              ><input
+                type="checkbox"
+                id="dryer"
+                name="dryer"
+                value="8"
+                v-model="roomInfo.options" />
+              Dryer</label
+            >
+          </div>
+
+          <div class="form-group image-input">
+            <label for="propertyImage">Upload Property Image:</label>
+            <input
+              type="file"
+              id="propertyImage"
+              name="propertyImage"
+              accept="image/*" />
+          </div>
         </div>
 
-        <div class="form-group">
-          <label for="monthlyRent">월세 Monthly Rent:</label>
-          <input
-            type="number"
-            id="monthlyRent"
-            name="monthlyRent"
-            v-model="roomInfo.monthly"
-            required />
-        </div>
+        <div style="clear: both"></div>
+
+        <button type="submit" @click="registRoomTransfer">Register</button>
       </div>
-
-      <div class="form-column">
-        <div class="form-group">
-          <label for="startDate">임대 시작 희망일 Start Date:</label>
-          <input
-            type="date"
-            id="startDate"
-            name="startDate"
-            v-model="roomInfo.startDate"
-            required />
-        </div>
-
-        <div class="form-group">
-          <label for="endDate">임대 종료 희망일 End Date:</label>
-          <input
-            type="date"
-            id="endDate"
-            name="endDate"
-            v-model="roomInfo.endDate"
-            required />
-        </div>
-
-        <div class="form-group options-group">
-          <label
-            ><input
-              type="checkbox"
-              id="bed"
-              name="bed"
-              value="1"
-              v-model="roomInfo.options" />
-            Bed</label
-          >
-          <label
-            ><input
-              type="checkbox"
-              id="refrigerator"
-              name="refrigerator"
-              value="2"
-              v-model="roomInfo.options" />
-            Refrigerator</label
-          >
-          <label
-            ><input
-              type="checkbox"
-              id="microwave"
-              name="microwave"
-              value="3"
-              v-model="roomInfo.options" />
-            Microwave</label
-          >
-          <label
-            ><input
-              type="checkbox"
-              id="internet"
-              name="internet"
-              value="4"
-              v-model="roomInfo.options" />
-            Internet</label
-          >
-          <label
-            ><input
-              type="checkbox"
-              id="washer"
-              name="washer"
-              value="5"
-              v-model="roomInfo.options" />
-            Washer</label
-          >
-          <label
-            ><input
-              type="checkbox"
-              id="desk"
-              name="desk"
-              value="6"
-              v-model="roomInfo.options" />
-            Desk</label
-          >
-          <label
-            ><input
-              type="checkbox"
-              id="chair"
-              name="chair"
-              value="7"
-              v-model="roomInfo.options" />
-            Chair</label
-          >
-
-          <label
-            ><input
-              type="checkbox"
-              id="dryer"
-              name="dryer"
-              value="8"
-              v-model="roomInfo.options" />
-            Dryer</label
-          >
-        </div>
-
-        <div class="form-group image-input">
-          <label for="propertyImage">Upload Property Image:</label>
-          <input
-            type="file"
-            id="propertyImage"
-            name="propertyImage"
-            accept="image/*" />
-        </div>
-      </div>
-
-      <div style="clear: both"></div>
-
-      <button type="submit" @click="registRoomTransfer">Register</button>
+      <!-- <input type="text" id="sample4_postcode" placeholder="우편번호" />
+      <input
+        type="button"
+        @onclick="sample4_execDaumPostcode"
+        value="우편번호 찾기" /><br />
+      <input type="text" id="sample4_roadAddress" placeholder="도로명주소" />
+      <input type="text" id="sample4_jibunAddress" placeholder="지번주소" />
+      <span id="guide" style="color: #999; display: none"></span>
+      <input type="text" id="sample4_detailAddress" placeholder="상세주소" />
+      <input type="text" id="sample4_extraAddress" placeholder="참고항목" /> -->
     </div>
-    <!-- <input type="text" id="sample4_postcode" placeholder="우편번호" />
-    <input
-      type="button"
-      @onclick="sample4_execDaumPostcode"
-      value="우편번호 찾기" /><br />
-    <input type="text" id="sample4_roadAddress" placeholder="도로명주소" />
-    <input type="text" id="sample4_jibunAddress" placeholder="지번주소" />
-    <span id="guide" style="color: #999; display: none"></span>
-    <input type="text" id="sample4_detailAddress" placeholder="상세주소" />
-    <input type="text" id="sample4_extraAddress" placeholder="참고항목" /> -->
   </div>
 </template>
 
@@ -303,7 +305,7 @@ const initMap = () => {
 /* #mu-header {
   position: static;
 } */
-/* 
+
 body {
   font-family: Arial, sans-serif;
   background-color: #f0f0f0; 
@@ -313,19 +315,19 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-} */
+}
 
 .registration-form {
   /* background-color: #5c546b; Updated background color */
-  position: relative;
+  /* position: relative; */
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  width: 800px;
+  width: 700px;
   max-width: 100%;
   box-sizing: border-box;
-  margin: auto;
-  margin-top: 130px;
+  /* margin: auto;
+  margin-top: 130px; */
   color: #fff; /* Text color for better contrast */
 }
 .form-group-set {
