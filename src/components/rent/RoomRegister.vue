@@ -23,19 +23,9 @@ const roomInfo = ref({
 const opt = ref([]);
 
 const registRoomTransfer = async () => {
-  var geocoder = new kakao.maps.services.Geocoder();
-
-  var callback = function (result, status) {
-    console.log("call back");
-    if (status === kakao.maps.services.Status.OK) {
-      roomInfo.value.lat = result[0].address.y;
-      roomInfo.value.lng = result[0].address.x;
-      console.log(result[0]);
-    }
-  };
-
-  await geocoder.addressSearch(address.value, callback);
-  console.log(registRoom);
+  // console.log("registr room func");
+  // await getLatLng();
+  //await geocoder.addressSearch(address.value, callback);
   console.log("registRoomTransfer");
   await registRoom(roomInfo.value);
 };
@@ -96,6 +86,39 @@ const sample4_execDaumPostcode = () => {
   }).open();
 };
 
+const getLatLng = async () => {
+  console.log("getLatLng");
+  // 주소-좌표 변환 객체를 생성합니다
+  var geocoder = new kakao.maps.services.Geocoder();
+
+  // 주소로 좌표를 검색합니다
+  await geocoder.addressSearch(address.value, function(result, status) {
+  
+      // 정상적으로 검색이 완료됐으면 
+      if (status === kakao.maps.services.Status.OK) {
+          roomInfo.value.lat = result[0].y;
+          roomInfo.value.lng = result[0].x;
+          var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+          console.log(coords);
+          // 결과값으로 받은 위치를 마커로 표시합니다
+          var marker = new kakao.maps.Marker({
+              map: map,
+              position: coords
+          });
+
+          // 인포윈도우로 장소에 대한 설명을 표시합니다
+          var infowindow = new kakao.maps.InfoWindow({
+              content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
+          });
+          infowindow.open(map, marker);
+
+          // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+          map.setCenter(coords);
+      } 
+  }); 
+}
+   
+
 onMounted(() => {
   if (window.kakao && window.kakao.maps) {
     initMap();
@@ -121,8 +144,17 @@ const initMap = () => {
 </script>
 
 <template>
-  <div class="room-content" style="display: flex; justify-content: center; margin-bottom: 5%;box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-    <div id="map" style="width:600px;height: auto;"></div>
+  <div class="room-content" style="display: flex; justify-content: center; margin-bottom: 5%;">
+    <div style="display: flex;flex-direction: column;">
+      <div id="map" style="width:600px;"></div>
+      <div class="inputBox_container">
+        <svg class="search_icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" alt="search icon" @click="getLatLng">
+          <path d="M46.599 46.599a4.498 4.498 0 0 1-6.363 0l-7.941-7.941C29.028 40.749 25.167 42 21 42 9.402 42 0 32.598 0 21S9.402 0 21 0s21 9.402 21 21c0 4.167-1.251 8.028-3.342 11.295l7.941 7.941a4.498 4.498 0 0 1 0 6.363zM21 6C12.717 6 6 12.714 6 21s6.717 15 15 15c8.286 0 15-6.714 15-15S29.286 6 21 6z">
+          </path>
+        </svg>
+        <input class="inputBox" id="inputBox" type="text" placeholder="Search For Products" v-model="address">
+      </div>
+    </div>
     <div class="registration-form">
       <h2>원룸 양도 등록</h2>
       <div class="form-group-set">
@@ -130,6 +162,7 @@ const initMap = () => {
           <div class="form-group">
             <label for="subject">제목 Subject:</label>
             <input
+              class="subject-input"
               type="text"
               id="subject"
               name="subject"
@@ -145,15 +178,6 @@ const initMap = () => {
               rows="4"
               v-model="roomInfo.comment"
               required></textarea>
-          </div>
-          <div class="form-group">
-            <label for="subject">주소 Address:</label>
-            <input
-              type="text"
-              id="address"
-              name="address"
-              v-model="address"
-              required />
           </div>
           <div class="form-group">
             <label for="deposit">보증금 Deposit:</label>
@@ -302,6 +326,38 @@ const initMap = () => {
 </template>
 
 <style scoped>
+/* search address button css */
+.inputBox_container {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  max-width: 14em;
+  width: auto;
+  height: fit-content;
+  background-color: #5c6370;
+  border-radius: 0.8em;
+  overflow: hidden;
+}
+
+.search_icon {
+  height: 1em;
+  padding: 0 0.5em 0 0.8em;
+  fill: #abb2bf;
+}
+
+.inputBox {
+  background-color: transparent;
+  color: #ffffff;
+  outline: none;
+  width: 100%;
+  border: 0;
+  padding: 0.5em 1.5em 0.5em 0;
+  font-size: 1em;
+}
+
+::placeholder {
+  color: #abb2bf;
+}
 /* #mu-header {
   position: static;
 } */
@@ -346,7 +402,8 @@ label {
   margin-bottom: 8px;
 }
 
-input[type="text"],
+/* input[type="text"], */
+.subject-input,
 input[type="number"],
 input[type="date"],
 input[type="checkbox"] {
@@ -419,4 +476,6 @@ button:hover {
 .image-input {
   margin-top: 20px;
 }
+
+
 </style>
