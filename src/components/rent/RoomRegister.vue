@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRoomStore } from "@/stores/roomStore.js";
-
+import { jwtDecode } from "jwt-decode";
 const roomStore = useRoomStore();
 const { registRoom } = roomStore;
 
@@ -27,6 +27,10 @@ const registRoomTransfer = async () => {
   // await getLatLng();
   //await geocoder.addressSearch(address.value, callback);
   console.log("registRoomTransfer");
+  let token = sessionStorage.getItem("accessToken");
+  let decodeToken = jwtDecode(token);
+  console.log(decodeToken.userId);
+  roomInfo.value.userId  = decodeToken.userId;
   await registRoom(roomInfo.value);
 };
 
