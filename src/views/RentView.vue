@@ -9,8 +9,7 @@ import {storeToRefs } from 'pinia';
 import { getApartDealInfo } from "@/api/apart";
 
 // Component Import
-import VRentMap from '../components/common/VKakaoMap.vue';
-import HouseSearchBar from "../components/house/HouseSearchBar.vue";
+import VRentMap from '../components/common/VRentMap.vue';
 import VRentSearchBar from "../components/rent/VRentSearchBar.vue";
 
 //Store
@@ -32,14 +31,14 @@ let debounce = null;
 </script>
 
 <template>
-    <ul v-for="(list, index) in rentRoomList" :key="index">
+    <!-- <ul v-for="(list, index) in rentRoomList" :key="index">
         <li> userId : {{ list.userId }}</li>
         <li> lat : {{ list.lat }}</li>
         <li> lng : {{ list.lat }}</li>
         <li> lat : {{ list.lat }}</li>
         <li> lat : {{ list.lat }}</li>
         <li> lat : {{ list.lat }}</li>
-    </ul>
+    </ul> -->
     
     <VRentSearchBar />
     <VRentMap />

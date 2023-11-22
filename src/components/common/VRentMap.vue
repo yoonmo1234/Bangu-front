@@ -4,20 +4,17 @@ import { ref, watch, onMounted } from "vue";
 
 // Store Import
 import { storeToRefs } from 'pinia';
-import { useHouseStore } from '@/stores/houseStore';
+import { useRentStore } from '@/stores/rentStore';
 
-const houseStore = useHouseStore();
+const rentStore = useRentStore();
 let debounce = null;
 
 
 const {
   // State
-  markerPositions,
-  selectedSido,
-  selectedGugun,
-  selectedDong,
-} = storeToRefs(houseStore);
-const {resetStore} = houseStore;
+  rentRoomList,
+} = storeToRefs(rentStore);
+const {resetStore} = useRentStore;
 
 var map;
 const positions = ref([]);
@@ -37,6 +34,20 @@ onMounted(() => {
   }
 });
 
+watch(
+  () => rentRoomList.value,
+  () => {
+    clearTimeout(debounce);
+    debounce = setTimeout(() => {
+      console.log("rentRoomList watch");
+      loadMarkers();
+    },50)
+  },
+  {
+    deep:true,
+  }
+)
+
 const initMap = () => {
   const container = document.getElementById("map");
   const options = {
@@ -45,20 +56,6 @@ const initMap = () => {
   }; 
   map = new kakao.maps.Map(container, options);
 }
-
-watch(
-  ()=>markerPositions.value,
-  () => {
-    clearTimeout(debounce);
-    debounce = setTimeout(() => {
-      console.log("watch(markerPositions)");
-      loadMarkers();
-    },50)
-  },
-  {
-    deep:true,
-  }
-)
 
 const loadMarkers = () => {
   // 현재 표시되어있는 marker들이 있다면 map에 등록된 marker를 제거한다.
@@ -72,10 +69,11 @@ const loadMarkers = () => {
 
   // 마커를 생성합니다
   markers.value = [];
-  markerPositions.value.forEach((position) => {
+  rentRoomList.value.forEach((position) => {
+    let latlng = new kakao.maps.LatLng(position.lat, position.lng);
     const marker = new kakao.maps.Marker({
       map: map, // 마커를 표시할 지도
-      position: position.latlng, // 마커를 표시할 위치
+      position: latlng, // 마커를 표시할 위치
       title: position.title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됨.
       clickable: true, // // 마커를 클릭했을 때 지도의 클릭 이벤트가 발생하지 않도록 설정합니다
       // image: markerImage, // 마커의 이미지
@@ -85,8 +83,8 @@ const loadMarkers = () => {
 
   // 4. 지도를 이동시켜주기
   // 배열.reduce( (누적값, 현재값, 인덱스, 요소)=>{ return 결과값}, 초기값);
-  const bounds = markerPositions.value.reduce(
-    (bounds, position) => bounds.extend(position.latlng),
+  const bounds = rentRoomList.value.reduce(
+    (bounds, position) => bounds.extend(new kakao.maps.LatLng(position.lat, position.lng)),
     new kakao.maps.LatLngBounds()
   );
 
