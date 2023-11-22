@@ -8,6 +8,7 @@ import { useRentStore } from '@/stores/rentStore';
 
 // Component Import
 import VSelect from "@/components/common/VSelectRent.vue";
+import VRentOptions from './VRentOptions.vue';
 
 
 
@@ -49,18 +50,18 @@ const sendData = () => {
 </script>
 
 <template>
+    <VRentOptions />
     <div class="vselect-container">
         <VSelectRent type="sido" :selectOption="sidoList" @onKeySelect="changeSido" />
         <VSelectRent type="gugun" :selectOption="gugunList" @onKeySelect="gugunChange" />
         <VSelectRent type="dong" :selectOption="dongList" @onKeySelect="dongChange" />
     </div>
 
-
     <!--  -->
-    <input v-model="deposit" type="number" name="deposit" id="">
-    <input v-model="monthly" type="number" name="monthly" id="">
+    <input v-model="deposit" type="number" name="deposit" id="" placeholder="deposit">
+    <input v-model="monthly" type="number" name="monthly" id="" placeholder="monthly">
+    <input v-model="startDate" type="date" name="startDate" id="" placeholder="startDate">
     <input v-model="endDate" type="date" name="endDate" id="">
-    <input v-model="startDate" type="date" name="startDate" id="">
     <fieldset>
         <legend>필요한 옵션을 선택하세요:</legend>
 
