@@ -8,19 +8,17 @@ const houseStore = useHouseStore();
 const {
     selectedDong,
     apartDealList,
+    toggle,
 } = storeToRefs(houseStore);
-const toggle = ref(true);
 
 const a = computed(() => apartDealList.value);
 watch(
-    selectedDong.value,
+    toggle,
     () => {
-        console.log(" 실행됨")
-        console.log(apartDealList.value);
-        if (selectedDong.code !== "") {
-            openNav();
-        } else {
-            closeNav();
+        if(toggle.value){
+            document.getElementById("mySidenav").style.width = "500px";
+        }else {
+            document.getElementById("mySidenav").style.width = "0";
         }
     }
 )
@@ -29,7 +27,8 @@ function openNav() {
 }
 
 function closeNav() {
-    document.getElementById("mySidenav").style.width = "0";
+    // document.getElementById("mySidenav").style.width = "0";
+    toggle.value = false;
 }
 </script>
 
@@ -45,7 +44,7 @@ function closeNav() {
             </div>
         </div> -->
         <div class="notifications-container">
-            <div  v-for="(item, index) in apartDealList" :key="index" class="error-alert">
+            <div  v-for="(item, index) in a" :key="index" class="error-alert">
                 <div class="flex">
                     <div class="flex-shrink-0">
                         <svg aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"

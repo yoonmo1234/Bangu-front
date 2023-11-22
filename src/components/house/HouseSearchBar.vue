@@ -8,7 +8,7 @@ import {useHouseStore } from '@/stores/houseStore';
 // Component Import
 import VSelect from "@/components/common/VSelect.vue";
 
-
+// const props = defineProps({toggle:Boolean});
 
 const houseStore = useHouseStore();
 const {
@@ -32,9 +32,9 @@ onMounted(() => {
 
 <template>
         <div class="vselect-container">
-            <VSelect type="sido" :selectOption="sidoList" @onKeySelect="changeSido" />
-            <VSelect type="gugun" :selectOption="gugunList" @onKeySelect="gugunChange" />
-            <VSelect type="dong" :selectOption="dongList" @onKeySelect="dongChange" />
+            <VSelect type="sido" :selectOption="sidoList"  />
+            <VSelect type="gugun" :selectOption="gugunList"  />
+            <VSelect type="dong" :selectOption="dongList" />
         </div>
 </template>
 
