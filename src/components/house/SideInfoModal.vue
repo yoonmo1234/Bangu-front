@@ -75,12 +75,12 @@ function closeNav() {
 <style scoped>
 .sidenav {
     border-radius: 5px;
-    height: 750px;
+    height: 680px;
     width: 0;
     /* width:400px; */
     position: fixed;
     z-index: 5;
-    top: 150px;
+    top: 140px;
     right: 0;
     background-color: #5c546b;
     overflow-x: hidden;

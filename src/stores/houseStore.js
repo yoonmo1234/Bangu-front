@@ -20,17 +20,6 @@ export const useHouseStore = defineStore('house', () => {
 
     const markerPositions = ref([]);
 
-
-    // Getters
-    // const isReadyToSearch = computed(() => selectedDong.value.code === "" ? false : true);
-
-    // if(selectedDong.value.code === "") {
-    //     return false;
-    // }else {
-    //     return true;
-    // }
-
-
     // Actions
 
     // 시/도 목록 얻기
@@ -121,16 +110,16 @@ export const useHouseStore = defineStore('house', () => {
     const getApartList = async () => {
         let years = [
             202201,
-            // 202202,
+            202202,
             // 202203,
             // 202204,
             // 202205,
-            // 202206,
+            202206,
             // 202207,
             // 202208,
-            // 202209,
+            202209,
             // 202210,
-            // 202211,
+            202211,
             // 202212,
         ];
         console.log("getApartList");
@@ -141,7 +130,7 @@ export const useHouseStore = defineStore('house', () => {
                 LAWD_CD: selectedGugun.value.code.substring(0, 5), //앞의 5개가 지역코드임
                 DEAL_YMD: years[i],
                 // DEAL_YMD: 202301,
-                numOfRows: 200,
+                numOfRows: 50,
             },
                 ({ data }) => {
                     apartDealList.value.push(...data.response.body.items.item);
@@ -184,11 +173,6 @@ export const useHouseStore = defineStore('house', () => {
             return null;
         });
     }
-
-
-
-
-
 
     return {
         // State

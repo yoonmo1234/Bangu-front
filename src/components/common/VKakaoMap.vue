@@ -120,7 +120,7 @@ const deleteMarkers = () => {
 <style scoped>
 #map {
   width: 100%;
-  height:100vh;
+  height:760px;
 }
 #mu-header {
   position: static;
