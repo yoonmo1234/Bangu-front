@@ -1,11 +1,12 @@
+
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 
 // API Import
 import { getAddress } from "@/api/sido";
-import { getApartDealInfo } from "@/api/apart";
+import { searchRentRoom } from '@/api/rent';
 
-export const useHouseStore = defineStore('house', () => {
+export const useRentStore = defineStore('rent', () => {
     // State
     const sidoList = ref([{ text: "시/도 선택", code: "" }]);
     const gugunList = ref([{ text: "구/군 선택", code: "" }]);
@@ -16,20 +17,9 @@ export const useHouseStore = defineStore('house', () => {
     const selectedGugun = ref({ text: "", code: "" });
     const selectedDong = ref({ text: "", code: "" });
 
-    const apartDealList = ref([]);
+    const rentRoomList = ref([]);
 
     const markerPositions = ref([]);
-
-
-    // Getters
-    // const isReadyToSearch = computed(() => selectedDong.value.code === "" ? false : true);
-
-    // if(selectedDong.value.code === "") {
-    //     return false;
-    // }else {
-    //     return true;
-    // }
-
 
     // Actions
 
@@ -108,87 +98,37 @@ export const useHouseStore = defineStore('house', () => {
     }
 
     function changeDong() {
-        apartDealList.value = [];
+        rentRoomList.value = [];
         markerPositions.value = [];
-        search();
+        // search(params);
     }
 
-    function search() {
+    function search(params) {
         console.log("search()");
-        getApartList();
+        getRentRoomList(params);
     }
 
-    const getApartList = async () => {
-        let years = [
-            202201,
-            202202,
-            202203,
-            // 202204,
-            // 202205,
-            // 202206,
-            // 202207,
-            // 202208,
-            // 202209,
-            202210,
-            202211,
-            202212,
-        ];
-        console.log("getApartList");
-        let apartList = [];
-        for (let i = 0; i < years.length; i++) {
-            await getApartDealInfo({
-                serviceKey: import.meta.env.VITE_OPEN_API_SERVICE_KEY,
-                LAWD_CD: selectedGugun.value.code.substring(0, 5), //앞의 5개가 지역코드임
-                DEAL_YMD: years[i],
-                // DEAL_YMD: 202301,
-                numOfRows: 200,
+    const getRentRoomList = async (params) => {
+        console.log("params: " ,JSON.stringify(params));
+        await searchRentRoom(
+            // {
+            //     deposit:0,
+            //     endDate:"",
+            //     monthy:0,
+            //     options: [
+            //         0,
+            //     ],
+            //     startDate:"",
+            // },
+            params,
+            (data)=>{
+                console.log("data : ", data);
             },
-                ({ data }) => {
-                    apartDealList.value.push(...data.response.body.items.item);
-                },
-                (err) => {
-                    console.log(err);
-                }
-            );
-        }
-    } // getApartList End
-
-    function resetStore() {
-        sidoList.value = [{ text: "시/도 선택", code: "" }];
-        gugunList.value = [{ text: "구/군 선택", code: "" }];
-        dongList.value = [{ text: "법정동 선택", code: "" }];
-
-
-        selectedSido.value = { text: "", code: "" };
-        selectedGugun.value = { text: "", code: "" };
-        selectedDong.value = { text: "", code: "" };
-
-        apartDealList.value = [];
-
-        markerPositions.value = [];
-    }
-    // 내부 API
-
-    const getCurrentLocation = async () => {
-        var geocoder = new kakao.maps.services.Geocoder();
-        const addr = `${selectedSido.value.text} ${selectedGugun.value.text} ${selectedDong.value.text}`;
-        console.log("addr : ", addr);
-        await geocoder.addressSearch(addr, (result, status) => {
-            if (status === kakao.maps.services.Status.OK) {
-                const curLatLng = {
-                    lat: result[0].y, // 위도
-                    lng: result[0].x, // 경도
-                }
-                return curLatLng;
+            (err) => {
+                console.log(err);
             }
-            return null;
-        });
+        )
     }
-
-
-
-
-
 
     return {
         // State
@@ -198,7 +138,7 @@ export const useHouseStore = defineStore('house', () => {
         selectedSido,
         selectedGugun,
         selectedDong,
-        apartDealList,
+        rentRoomList,
         markerPositions,
 
         //getter
@@ -209,7 +149,6 @@ export const useHouseStore = defineStore('house', () => {
         changeSido,
         changeGugun,
         changeDong,
-        getCurrentLocation,
-        resetStore,
+        search,
     }
 })

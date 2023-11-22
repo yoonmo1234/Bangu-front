@@ -11,6 +11,7 @@ import { getApartDealInfo } from "@/api/apart";
 // Component Import
 import VKakaoMap from '../components/common/VKakaoMap.vue';
 import HouseSearchBar from "../components/house/HouseSearchBar.vue";
+import SideInfoModal from "../components/house/SideInfoModal.vue";
 
 //Store
 const houseStore = useHouseStore();
@@ -53,17 +54,13 @@ const getApartList =  async () => {
 }
 
 watch(
-    apartDealList,
-    async (ol, ne) => {
+    ()=>apartDealList.value,
+    async () => {
       let apts = [];
       // apartDealList를 초기화 하는 거면 밑의 로직은 실행 안되게 하는 if문
       clearTimeout(debounce);
       debounce = setTimeout(async () => {
-
-      if(apartDealList.value.length === 0) {
-        return;
-      }
-      else {
+        console.log("watch(apartDealList)");
         // markerPositions.value = [];
         var geocoder = new kakao.maps.services.Geocoder();
       let i = 1;
@@ -75,12 +72,10 @@ watch(
             let add = apt['중개사소재지'].trim() + " " + apt['법정동'].trim() + " " + apt['지번'];
             await geocoder.addressSearch(add, (result, status) => {
               if (status === kakao.maps.services.Status.OK) {
-                apts.push({
+                markerPositions.value.push({
                   latlng: new kakao.maps.LatLng(result[0].y, result[0].x),
                   title: apt['아파트'],
-                  // lat : result[0].y,
-                  // lng : result[0].x,
-                });
+                })
               }
             },
               {
@@ -88,20 +83,10 @@ watch(
               });
           }
         }
-        // if(apts.length === 0) {
-        //   const pos = getCurrentLocation();
-        //   apts.push({
-        //     latlng:new kakao.maps.LatLng(pos.lat, pos.lng),
-        //     title:"아파트없음",
-        //   });
-        //   markerPositions.value = apts;
-        // }else {
-        //   markerPositions.value = apts;
-        // }
-        markerPositions.value = apts;
-      }
-
       },50)
+    },
+    {
+      deep: true,
     }
 )
 </script>
@@ -109,6 +94,7 @@ watch(
 <template>
     <HouseSearchBar />
     <VKakaoMap />
+    <SideInfoModal />
 </template>
 
 <style scoped>

@@ -1,5 +1,6 @@
+
 <script setup>
-import { ref, watch, computed, onMounted } from "vue";
+import { ref, watch, onMounted } from "vue";
 
 // Store Import
 import { storeToRefs } from 'pinia';
@@ -20,7 +21,6 @@ const {resetStore} = houseStore;
 
 var map;
 const positions = ref([]);
-// const positions = computed(() => markerPositions);
 const markers = ref([]);
 
 const props = defineProps({ markerList: Array, currentLocation: Object, });
@@ -54,12 +54,6 @@ watch(
       console.log("watch(markerPositions)");
       loadMarkers();
     },50)
-        // if(markerPositions.value.length === 0) {
-        //   return;
-        // }
-        // else {
-        //  loadMarkers();
-        // }
   },
   {
     deep:true,
