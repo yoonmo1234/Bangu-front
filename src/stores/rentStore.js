@@ -121,8 +121,11 @@ export const useRentStore = defineStore('rent', () => {
             //     startDate:"",
             // },
             params,
-            (data)=>{
-                console.log("data : ", data);
+            ({data})=>{
+                // console.log("data : ", data);
+                data.forEach((item)=> {
+                    rentRoomList.value.push(item);
+                });
             },
             (err) => {
                 console.log(err);

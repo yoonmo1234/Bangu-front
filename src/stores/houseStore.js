@@ -20,16 +20,7 @@ export const useHouseStore = defineStore('house', () => {
 
     const markerPositions = ref([]);
 
-
-    // Getters
-    // const isReadyToSearch = computed(() => selectedDong.value.code === "" ? false : true);
-
-    // if(selectedDong.value.code === "") {
-    //     return false;
-    // }else {
-    //     return true;
-    // }
-
+    const toggle = ref(false);
 
     // Actions
 
@@ -110,6 +101,7 @@ export const useHouseStore = defineStore('house', () => {
     function changeDong() {
         apartDealList.value = [];
         markerPositions.value = [];
+        // toggle.value = true;
         search();
     }
 
@@ -120,37 +112,42 @@ export const useHouseStore = defineStore('house', () => {
 
     const getApartList = async () => {
         let years = [
-            202201,
-            202202,
-            202203,
+            // 202201,
+            // 202202,
+            // 202203,
             // 202204,
             // 202205,
             // 202206,
             // 202207,
             // 202208,
             // 202209,
-            202210,
-            202211,
-            202212,
+            // 202210,
+            // 202211,
+            // 202212,
         ];
         console.log("getApartList");
         let apartList = [];
-        for (let i = 0; i < years.length; i++) {
+        // for (let i = 0; i < years.length; i++) {
             await getApartDealInfo({
                 serviceKey: import.meta.env.VITE_OPEN_API_SERVICE_KEY,
                 LAWD_CD: selectedGugun.value.code.substring(0, 5), //앞의 5개가 지역코드임
-                DEAL_YMD: years[i],
-                // DEAL_YMD: 202301,
-                numOfRows: 200,
+                // DEAL_YMD: years[i],
+                DEAL_YMD: 202201,
+                numOfRows: 50,
             },
                 ({ data }) => {
-                    apartDealList.value.push(...data.response.body.items.item);
+                    let list = data.response.body.items.item;
+                    for(let i = 0; i<list.length;i++) {
+                        if(list[i]['법정동'].trim() === selectedDong.value.text.trim()){
+                            apartDealList.value.push(list[i]);
+                        }
+                    }
                 },
                 (err) => {
                     console.log(err);
                 }
             );
-        }
+        // }
     } // getApartList End
 
     function resetStore() {
@@ -185,11 +182,6 @@ export const useHouseStore = defineStore('house', () => {
         });
     }
 
-
-
-
-
-
     return {
         // State
         sidoList,
@@ -200,6 +192,7 @@ export const useHouseStore = defineStore('house', () => {
         selectedDong,
         apartDealList,
         markerPositions,
+        toggle,
 
         //getter
         // isReadyToSearch,

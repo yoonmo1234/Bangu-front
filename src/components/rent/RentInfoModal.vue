@@ -1,50 +1,44 @@
 <script setup>
-import { ref, watch, computed } from "vue";
-import { useHouseStore } from '@/stores/houseStore';
+import { ref, watch, computed, defineProps, defineEmits } from "vue";
+import { useRentStore } from '@/stores/rentStore';
 import { storeToRefs } from 'pinia';
 
+
+const props = defineProps({toggle:Boolean});
+const emit = defineEmits(['toggleToFalse']);
+
 //Store
-const houseStore = useHouseStore();
+const rentStore = useRentStore();
 const {
-    selectedDong,
-    apartDealList,
-    toggle,
-} = storeToRefs(houseStore);
+    rentRoomList,
+} = storeToRefs(rentStore);
 
 const a = computed(() => apartDealList.value);
 watch(
-    toggle,
+    ()=>props.toggle,
     () => {
-        if(toggle.value){
-            document.getElementById("mySidenav").style.width = "500px";
-        }else {
-            document.getElementById("mySidenav").style.width = "0";
+        console.log("rentInfoModal watch 실행됨")
+        if (props.toggle) {
+    document.getElementById("mySidenav").style.width = "500px";
+        } else {
+    document.getElementById("mySidenav").style.width = "0";
         }
+    },
+    {
+        deep:true,
     }
 )
-function openNav() {
-    document.getElementById("mySidenav").style.width = "500px";
-}
 
 function closeNav() {
-    // document.getElementById("mySidenav").style.width = "0";
-    toggle.value = false;
+    emit('toggleToFalse', false);
 }
 </script>
 
 <template>
     <div id="mySidenav" class="sidenav">
         <button class="closebtn" @click="closeNav">&times;</button>
-        <!-- <div v-for="(item, index) in apartDealList" :key="index" class="card">
-            <div class="container">
-                <h4><b>{{ item['아파트'] }}</b></h4>
-                <p>주소 : {{ item['중개사소재지'] }}</p>
-                <p> 건축년도{{ item['건축년도'] }}</p>
-                <p> 거래금액{{ item['거래금액'] }},000</p>
-            </div>
-        </div> -->
         <div class="notifications-container">
-            <div  v-for="(item, index) in a" :key="index" class="error-alert">
+            <div  v-for="(item, index) in rentRoomList" :key="index" class="error-alert">
                 <div class="flex">
                     <div class="flex-shrink-0">
                         <svg aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
@@ -55,13 +49,14 @@ function closeNav() {
                         </svg>
                     </div>
                     <div class="error-prompt-container">
-                        <p class="error-prompt-heading">{{ item['아파트'] }}
+                        <p class="error-prompt-heading">{{ item['subject'] }}
                         </p>
                         <div class="error-prompt-wrap">
                             <ul class="error-prompt-list" role="list">
-                                <li>주소: {{ item['중개사소재지'] }}</li>
-                                <li>건축년도: {{ item['건축년도'] }}</li>
-                                <li>거래금액: {{ item['거래금액'] }},000</li>
+                                <li>보증금 : : {{ item['deposit'] }}</li>
+                                <li>월세: {{ item['monthly'] }}</li>
+                                <!-- <li>메모: {{ item['comment'] }}</li> -->
+                                <li>유저: {{ item['userId'] }}</li>
                             </ul>
                         </div>
                     </div>

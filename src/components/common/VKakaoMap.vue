@@ -15,6 +15,8 @@ const {
   selectedSido,
   selectedGugun,
   selectedDong,
+  apartDealList,
+  toggle,
 } = storeToRefs(houseStore);
 const {resetStore} = houseStore;
 
@@ -53,6 +55,11 @@ watch(
     debounce = setTimeout(() => {
       console.log("watch(markerPositions)");
       loadMarkers();
+      if(apartDealList.value.length !==0) {
+        toggle.value=true;
+      }else {
+        toggle.value = false;
+      }
     },50)
         // if(markerPositions.value.length === 0) {
         //   return;
@@ -101,10 +108,8 @@ const loadMarkers = () => {
 
 const deleteMarkers = () => {
   console.log("deleteMarkers");
-  console.log("markers.value.length",markers.value.length);
   if (markers.value.length > 0) {
     markers.value.forEach((marker) => {
-      console.log("marker: ",marker);
       marker.setMap(null)
     });
   }
@@ -117,10 +122,10 @@ const deleteMarkers = () => {
   <div id="map"></div>
 </template>
 
-<style>
+<style scoped>
 #map {
   width: 100%;
-  height:100vh;
+  height:760px;
 }
 #mu-header {
   position: static;
