@@ -2,11 +2,18 @@ import { ref } from "vue";
 import { defineStore } from "pinia";
 import { useRouter } from "vue-router";
 import { roomList, roomListByOption, roomTransfer, getRoom } from "../api/room";
-
+import { httpStatusCode } from "@/util/http-status";
 export const useRoomStore = defineStore("roomStore", () => {
   const roomList = ref(null);
   const roomInfo = ref(null);
   const router = useRouter();
+
+  const detailAvail = ref(false);
+
+  const toggleDetailAvail = () => {
+    detailAvail.value = true;
+  };
+
   const registRoom = async (room) => {
     console.log("registRoom", JSON.stringify(room));
     await roomTransfer(
@@ -31,6 +38,7 @@ export const useRoomStore = defineStore("roomStore", () => {
       roomId,
       (response) => {
         if (response.status === httpStatusCode.OK) {
+          console.log(response.data);
           roomInfo.value = response.data;
         } else {
           console.error("룸 정보 없음");
@@ -57,5 +65,13 @@ export const useRoomStore = defineStore("roomStore", () => {
       }
     );
   };
-  return { getRoomList, getRoomInfo, registRoom, roomInfo, roomList };
+  return {
+    toggleDetailAvail,
+    getRoomList,
+    getRoomInfo,
+    registRoom,
+    roomInfo,
+    roomList,
+    detailAvail,
+  };
 });
