@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, watch, defineProps } from "vue";
 
-const props = defineProps({toggle:Boolean});
+const props = defineProps({ toggle: Boolean });
 
 // Store Import
 import { useRentStore } from "@/stores/rentStore";
@@ -12,7 +12,7 @@ import { getApartDealInfo } from "@/api/apart";
 
 // Component Import
 
-import VRentMap from '@/components/common/VRentMap.vue';
+import VRentMap from "@/components/common/VRentMap.vue";
 import VRentSearchBar from "../components/rent/VRentSearchBar.vue";
 import RentInfoModal from "../components/rent/RentInfoModal.vue";
 
@@ -25,20 +25,19 @@ const { selectedSido, selectedGugun, selectedDong, rentRoomList } =
 
 // Data
 
-
 const toggle = ref(false);
 
 let debounce = null;
 
 const toggleUpdate = (newValue) => {
-    toggle.value = newValue;
-}
+  toggle.value = newValue;
+};
 </script>
 
 <template>
-    <VRentSearchBar :toggle="toggle" @toggleUpdate="toggleUpdate" />
-    <VRentMap />
-    <RentInfoModal :toggle="toggle" @toggleToFalse="toggleUpdate" />
+  <VRentSearchBar :toggle="toggle" @toggleUpdate="toggleUpdate" />
+  <VRentMap />
+  <RentInfoModal :toggle="toggle" @toggleToFalse="toggleUpdate" />
 </template>
 
 <style scoped></style>
