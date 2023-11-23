@@ -2,13 +2,33 @@
 import { ref, onMounted, defineProps, defineEmits } from "vue";
 import { useRoomStore } from "@/stores/roomStore";
 import { storeToRefs } from "pinia";
-
-const props = defineProps({ roomId: Number });
+import { useRoute } from "vue-router";
+// const props = defineProps({ roomId: Number });
+const route = useRoute();
 const roomStore = useRoomStore();
 const { getRoomInfo } = roomStore;
 const { roomInfo } = storeToRefs(roomStore);
 
-onMounted(() => {
+const optionStatus = ref([
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false
+]);
+const registerTransfer = () => {
+  alert("신청하시겠습니까?");
+};
+
+onMounted(async() => {
+  await getRoomInfo(route.params.roomId);
+  roomInfo.value.options.forEach(element => {
+    optionStatus.value[element] = true;
+  });
   if (window.kakao && window.kakao.maps) {
     initMap();
   } else {
@@ -45,11 +65,12 @@ const initMap = () => {
         <div class="content">
           <p>{{ roomInfo.comment }}</p>
         </div>
+
         <div class="money">
           <h3>임대료</h3>
           <div style="display: flex">
             <div class="deposit">
-              <strong>보증금</strong>{{ roomInfo.deposit }}만원
+              <strong>보증금</strong> {{ roomInfo.deposit }}만원
             </div>
             <div class="rent">
               <strong>월세</strong> {{ roomInfo.monthly }}만원
@@ -59,14 +80,14 @@ const initMap = () => {
         <div class="options">
           <h3>옵션</h3>
           <ul>
-            <li>침대</li>
-            <li>냉장고</li>
-            <li>전자레인지</li>
-            <li>인터넷</li>
-            <li>세탁기</li>
-            <li>책상</li>
-            <li>의자</li>
-            <li>건조기</li>
+            <li v-show="optionStatus[1]">침대</li>
+            <li v-show="optionStatus[2]">냉장고</li>
+            <li v-show="optionStatus[3]">전자레인지</li>
+            <li v-show="optionStatus[4]">인터넷</li>
+            <li v-show="optionStatus[5]">세탁기</li>
+            <li v-show="optionStatus[6]">책상</li>
+            <li v-show="optionStatus[7]">의자</li>
+            <li v-show="optionStatus[8]">건조기</li>
             <!-- 다른 옵션들도 추가 가능 -->
           </ul>
         </div>
@@ -78,15 +99,24 @@ const initMap = () => {
             >
           </p>
         </div>
+        <div class="gender">
+          <h3>부가 정보</h3>
+          <p v-show="roomInfo.gender == 1"><strong>임차인이 여성입니다. 여성 거주를 추천합니다.</strong></p>
+          <p v-show="roomInfo.gender == 0"><strong>임차인이 남성입니다. 남성 거주를 추천합니다.</strong></p>
+        </div>
       </div>
       <div>
-        <button class="transfer-btn">신청하기</button>
+        <button class="transfer-btn" @click="registerTransfer">신청하기</button>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+.gender,
+.deposit{
+  font-size: large;
+}
 .closebtn {
   color: black;
   top: 0;
@@ -96,7 +126,9 @@ const initMap = () => {
 }
 .rent {
   margin-left: 3%;
+  font-size: large;
 }
+.gender,
 .money {
   border-bottom: 2px solid #5c546b;
   padding-bottom: 10px;
@@ -151,6 +183,7 @@ h3 {
 }
 
 .content {
+  font-size: large;
   margin-bottom: 20px;
 }
 
