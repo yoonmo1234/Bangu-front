@@ -27,7 +27,7 @@
 							<p>방학 때 잠시 있을 곳이 필요한가요? 특정 지역에 단기적으로 머물러야 하나요? 짧게든 길게든 단기적으로 머물러야 할 때,</p>
 							<p>방구를 이용해서 방을 구해보세요! [방 구할 사람~?]</p>
 							<div class="rank-flex">
-								<a href="#mu-portfolio" class="mu-primary-btn view-my-work-btn go-box" style="font-size: 20px;">랭킹 차트 보러 가기</a>
+								<RouterLink :to="{name:'chart'}" class="mu-primary-btn view-my-work-btn go-box" style="font-size: 20px;">랭킹 차트 보러 가기</RouterLink>
 								<RouterLink :to="{name:'rent-room'}" class="mu-primary-btn view-my-work-btn go-box" style="font-size: 20px;">양도방 보러 가기</RouterLink>
 							</div>
 						</div>
