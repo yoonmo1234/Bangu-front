@@ -62,9 +62,12 @@ const viewDetail = async (roomId) => {
           <div class="error-prompt-container">
             <div style="display: flex">
               <p class="error-prompt-heading">{{ item["subject"] }}</p>
-              <button class="detail-btn" @click="viewDetail(item['id'])">
-                상세보기
-              </button>
+              <!-- <button class="detail-btn" @click="viewDetail(item['id'])">
+                
+              </button> -->
+              <!-- <span class="detail-btn"> -->
+              <RouterLink class="detail-btn" @click="viewDetail" :to="{name: 'roomDetail', params:{roomId: item['id']}}">상세보기</RouterLink>
+            <!-- </span> -->
             </div>
             <div class="error-prompt-wrap">
               <ul class="error-prompt-list" role="list">
@@ -79,7 +82,6 @@ const viewDetail = async (roomId) => {
       </div>
     </div>
   </div>
-  <RoomDetailModal></RoomDetailModal>
 </template>
 
 <style scoped>
@@ -110,12 +112,12 @@ const viewDetail = async (roomId) => {
 }
 
 .sidenav a {
-  padding: 8px 8px 8px 32px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #818181;
-  display: block;
-  transition: 0.3s;
+  display: inline-block;
+  margin-left: 100px;
+  background-color: #991b1b;
+  color: #fff;
+  padding: 3px 8px;
+  border-radius: 5px;
 }
 
 .sidenav a:hover {
