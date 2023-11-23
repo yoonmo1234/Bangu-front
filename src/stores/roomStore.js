@@ -2,6 +2,7 @@ import { ref } from "vue";
 import { defineStore } from "pinia";
 import { useRouter } from "vue-router";
 import { roomList, roomListByOption, roomTransfer, getRoom } from "../api/room";
+import { httpStatusCode } from "@/util/http-status.js";
 
 export const useRoomStore = defineStore("roomStore", () => {
   const roomList = ref(null);

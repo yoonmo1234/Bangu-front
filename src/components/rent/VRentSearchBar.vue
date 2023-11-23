@@ -244,10 +244,10 @@ body {
 .search-btn {
     margin-left:10px;
     font-size: 25px;
-    background-color: #5c546b; 
     color: white;
     width: 100px;
     border-radius: 7px;
+    background-color: #5c546b; 
 }
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
