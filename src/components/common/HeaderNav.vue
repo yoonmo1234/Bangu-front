@@ -43,13 +43,17 @@ const logout = async () => {
 		    <!-- Collect the nav links, forms, and other content for toggling -->
 		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1 custom-navbar">
 		      	<ul class="nav navbar-nav mu-menu navbar-right custom-navbar">
-			        <li><RouterLink :to="{name:'UserLogin'}" href="#">로그인</RouterLink></li>
+					<template v-if="!isLogin">
+						<li><RouterLink :to="{name:'UserLogin'}" href="#">로그인</RouterLink></li>
+					</template>
+					<template v-else>
+						<li><a href="#mu-portfolio">원룸 양도</a></li>
+						<li><a class="logout-custom" @click="logout">로그아웃</a></li>
+					</template>
 			        <li><a href="#mu-service">공지사항</a></li>
 			        <li><RouterLink :to="{name:'rent-room'}">양도방보기</RouterLink></li>
 
 					<!-- 로그인시 보일 거 -->
-		            <li><a href="#mu-portfolio">원룸 양도</a></li>
-		            <li><a href="#mu-testimonials">로그아웃</a></li>
 		      	</ul>
 		    </div><!-- /.navbar-collapse -->
 		  </div><!-- /.container-fluid -->
@@ -62,6 +66,9 @@ const logout = async () => {
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap');
 .custom-navbar {
   font-family: 'Noto Sans KR', sans-serif;
+}
+.logout-custom:hover {
+	cursor: pointer;
 }
 
 </style>

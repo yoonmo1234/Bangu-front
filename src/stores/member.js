@@ -126,6 +126,7 @@ export const useMemberStore = defineStore("memberStore", () => {
   };
 
   const userLogout = async (token) => {
+    console.log(token);
     let decodeToken = jwtDecode(token);
     console.log(decodeToken);
     await logout(
