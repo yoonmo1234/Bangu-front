@@ -88,6 +88,11 @@ const router = createRouter({
           name: "roomRegist",
           component: () => import("@/components/rent/RoomRegister.vue"),
         },
+        {
+          path: "detail/:roomId",
+          name: "roomDetail",
+          component: () => import("@/components/rent/RoomDetailModal.vue"),
+        },
       ],
     },
   ],
