@@ -70,6 +70,9 @@ export const useMemberStore = defineStore("memberStore", () => {
       (response) => {
         if (response.status === httpStatusCode.OK) {
           userInfo.value = response.data.userInfo;
+          // isLogin.value = true;
+          // isLoginError.value = false;
+          // isValidToken.value = true;
         } else {
           console.log("유저 정보 없음!!!!");
         }

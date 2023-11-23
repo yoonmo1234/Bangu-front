@@ -18,6 +18,7 @@ const roomInfo = ref({
   lat: null,
   lng: null,
   fileInfos: [],
+  dongCode:null,
 });
 
 const opt = ref([]);
@@ -34,62 +35,12 @@ const registRoomTransfer = async () => {
   await registRoom(roomInfo.value);
 };
 
-const sample4_execDaumPostcode = () => {
-  console.log("execDaum");
-  new daum.Postcode({
-    oncomplete: function (data) {
-      // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
-      // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
-      // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-      var roadAddr = data.roadAddress; // 도로명 주소 변수
-      var extraRoadAddr = ""; // 참고 항목 변수
-
-      // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-      // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-      if (data.bname !== "" && /[동|로|가]$/g.test(data.bname)) {
-        extraRoadAddr += data.bname;
-      }
-      // 건물명이 있고, 공동주택일 경우 추가한다.
-      if (data.buildingName !== "" && data.apartment === "Y") {
-        extraRoadAddr +=
-          extraRoadAddr !== "" ? ", " + data.buildingName : data.buildingName;
-      }
-      // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-      if (extraRoadAddr !== "") {
-        extraRoadAddr = " (" + extraRoadAddr + ")";
-      }
-
-      // 우편번호와 주소 정보를 해당 필드에 넣는다.
-      document.getElementById("sample4_postcode").value = data.zonecode;
-      document.getElementById("sample4_roadAddress").value = roadAddr;
-      document.getElementById("sample4_jibunAddress").value = data.jibunAddress;
-
-      // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
-      if (roadAddr !== "") {
-        document.getElementById("sample4_extraAddress").value = extraRoadAddr;
-      } else {
-        document.getElementById("sample4_extraAddress").value = "";
-      }
-
-      var guideTextBox = document.getElementById("guide");
-      // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
-      if (data.autoRoadAddress) {
-        var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
-        guideTextBox.innerHTML = "(예상 도로명 주소 : " + expRoadAddr + ")";
-        guideTextBox.style.display = "block";
-      } else if (data.autoJibunAddress) {
-        var expJibunAddr = data.autoJibunAddress;
-        guideTextBox.innerHTML = "(예상 지번 주소 : " + expJibunAddr + ")";
-        guideTextBox.style.display = "block";
-      } else {
-        guideTextBox.innerHTML = "";
-        guideTextBox.style.display = "none";
-      }
-    },
-  }).open();
-};
-
+// document.querySelector("#inputBox").addEventListener("keydown", (e) =>{
+//   console.log(e);
+//   if(e.key === 'Enter') {
+//     getLatLng();
+//   }
+// })
 const getLatLng = async () => {
   console.log("getLatLng");
   // 주소-좌표 변환 객체를 생성합니다
@@ -100,8 +51,10 @@ const getLatLng = async () => {
   
       // 정상적으로 검색이 완료됐으면 
       if (status === kakao.maps.services.Status.OK) {
+        console.log(result[0]);
           roomInfo.value.lat = result[0].y;
           roomInfo.value.lng = result[0].x;
+          roomInfo.value.dongCode = result[0].b_code;
           var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
           console.log(coords);
           // 결과값으로 받은 위치를 마커로 표시합니다
@@ -112,7 +65,7 @@ const getLatLng = async () => {
 
           // 인포윈도우로 장소에 대한 설명을 표시합니다
           var infowindow = new kakao.maps.InfoWindow({
-              content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
+              content: '<div style="width:150px;text-align:center;padding:6px 0;">우리집</div>'
           });
           infowindow.open(map, marker);
 
@@ -138,6 +91,7 @@ onMounted(() => {
 });
 var map;
 const initMap = () => {
+  console.log("iniMpa()");
   const container = document.getElementById("map");
   const options = {
     center: new kakao.maps.LatLng(33.450701, 126.570667),
@@ -149,15 +103,17 @@ const initMap = () => {
 
 <template>
   <div class="room-content" style="display: flex; justify-content: center; margin-bottom: 5%;">
-    <div style="display: flex;flex-direction: column;">
-      <div id="map" style="width:600px;"></div>
+    <div style="display: flex;flex-direction: column; ">
       <div class="inputBox_container">
         <svg class="search_icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" alt="search icon" @click="getLatLng">
           <path d="M46.599 46.599a4.498 4.498 0 0 1-6.363 0l-7.941-7.941C29.028 40.749 25.167 42 21 42 9.402 42 0 32.598 0 21S9.402 0 21 0s21 9.402 21 21c0 4.167-1.251 8.028-3.342 11.295l7.941 7.941a4.498 4.498 0 0 1 0 6.363zM21 6C12.717 6 6 12.714 6 21s6.717 15 15 15c8.286 0 15-6.714 15-15S29.286 6 21 6z">
           </path>
         </svg>
-        <input class="inputBox" id="inputBox" type="text" placeholder="Search For Products" v-model="address">
+        <input class="inputBox" id="inputBox" type="text" placeholder="도로명 주소 검색" v-model="address">
       </div>
+      <br>
+      <div id="map" style="width:600px;height:700px"></div>
+      <br>
     </div>
     <div class="registration-form">
       <h2>원룸 양도 등록</h2>
@@ -302,7 +258,7 @@ const initMap = () => {
           </div>
 
           <div class="form-group image-input">
-            <label for="propertyImage">Upload Property Image:</label>
+            <label for="propertyImage">방 사진을 등록해주세요 :</label>
             <input
               type="file"
               id="propertyImage"
@@ -313,7 +269,7 @@ const initMap = () => {
 
         <div style="clear: both"></div>
 
-        <button type="submit" @click="registRoomTransfer">Register</button>
+        <button type="submit" @click="registRoomTransfer">등록하기</button>
       </div>
       <!-- <input type="text" id="sample4_postcode" placeholder="우편번호" />
       <input

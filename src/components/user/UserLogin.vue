@@ -22,6 +22,7 @@ const newUser = ref({
   email: "",
   emailId: "",
   emailDomain: "",
+  gender:"",
 });
 
 const login = async () => {
@@ -67,51 +68,60 @@ onMounted(() => {
   <div class="container" id="container">
     <div class="form-container sign-up-container">
       <div class="form">
-        <h1>Create Account</h1>
+        <h1 style="font-family: 'Noto Sans KR', sans-serif;">회원가입</h1>
         <div class="social-container">
           <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
           <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
           <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
         </div>
-        <span>or use your email for registration</span>
-        <input type="text" placeholder="Id" v-model="newUser.userId" />
-        <input type="text" placeholder="Name" v-model="newUser.userName" />
+        <!-- <span>or use your email for registration</span> -->
+        <input type="text" placeholder="아이디" v-model="newUser.userId" />
+        <input type="text" placeholder="이름" v-model="newUser.userName" />
         <input type="email" placeholder="Email" v-model="newUser.email" />
         <input
           type="password"
-          placeholder="Password"
+          placeholder="비밀번호"
           v-model="newUser.userPwd" />
-        <button @click="signUp">Sign Up</button>
+          <br>
+          <div class="genderOption">
+            <label for="male">남자
+            <input type="radio" id="male" name="male" placeholder="남자" value="MALE" v-model="newUser.gender" />
+            </label>
+            <label for="female">여자
+              <input type="radio" id="female" name="female" placeholder="여자" value="FEMALE" v-model="newUser.gender" />
+            </label>
+          </div>
+        <button style="margin-top: 15px;" @click="signUp">가입하기</button>
       </div>
     </div>
     <div class="form-container sign-in-container">
       <div class="form">
-        <h1>Sign in</h1>
+        <h1>로그인</h1>
         <div class="social-container">
           <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
           <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
           <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
         </div>
         <span>or use your account</span>
-        <input type="text" placeholder="Id" v-model="loginUser.userId" />
+        <input type="text" placeholder="아이디" v-model="loginUser.userId" />
         <input
           type="password"
-          placeholder="Password"
+          placeholder="비밀번호"
           v-model="loginUser.userPwd" />
-        <a href="#">Forgot your password?</a>
-        <button @click="login">Sign In</button>
+        <a href="#">비밀번호를 잊으셨나요?</a>
+        <button @click="login">Log In</button>
       </div>
     </div>
     <div class="overlay-container">
       <div class="overlay">
         <div class="overlay-panel overlay-left">
-          <h1>Welcome Back!</h1>
-          <p>To keep connected with us please login with your personal info</p>
-          <button class="ghost" id="signIn">Sign In</button>
+          <h1>환영합니다!</h1>
+          <p>로그인을 하려면 밑의 LOG IN을 누르세요.</p>
+          <button class="ghost" id="signIn">Log IN</button>
         </div>
         <div class="overlay-panel overlay-right">
-          <h1>Hello, Friend!</h1>
-          <p>Enter your personal details and start journey with us</p>
+          <h1>회원가입 하기</h1>
+          <p>회원가입을 하려면 밑의 SIGN UP 버튼을 클릭하세요!</p>
           <button class="ghost" id="signUp">Sign Up</button>
         </div>
       </div>
@@ -121,6 +131,7 @@ onMounted(() => {
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400,800");
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap');
 
 * {
   box-sizing: border-box;
@@ -167,8 +178,8 @@ a {
 
 button {
   border-radius: 20px;
-  border: 1px solid #339999;
-  background-color: #3ec7c7;
+  border: 1px solid #744ebb;
+  background-color: #5c546b;
   color: #ffffff;
   font-size: 12px;
   font-weight: bold;
@@ -219,6 +230,7 @@ input {
   width: 768px;
   max-width: 100%;
   min-height: 600px;
+  margin-top: 70px;
 }
 
 .form-container {
@@ -282,9 +294,9 @@ input {
 }
 
 .overlay {
-  background: #3ec7c7;
-  background: -webkit-linear-gradient(to right, #339999, #3ec7c7);
-  background: linear-gradient(to right, #339999, #3ec7c7);
+  /* background: #5c546b; */
+  background: linear-gradient(to right, #5c546b, #806ea3);
+  background: linear-gradient(to left, #5c546b, #806ea3);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 0 0;
@@ -371,5 +383,16 @@ footer i {
 footer a {
   color: #3c97bf;
   text-decoration: none;
+}
+.genderOption {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  /* background-color: red; */
+}
+.genderOption > label {
+  color: #686869;
+  font-size: 15px;
+  font-weight: bold;
 }
 </style>

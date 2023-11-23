@@ -18,4 +18,15 @@ async function getRoom(roomId, success, fail) {
   await local.get(`/rooms/${roomId}`).then(success).catch(fail);
 }
 
-export { roomList, roomListByOption, roomTransfer, getRoom };
+async function getRankCity(success, fail) {
+  await local.get(`/rank/city`).then(success).catch(fail);
+}
+async function getRankMale(success, fail) {
+  await local.get(`/rank/male`).then(success).catch(fail);
+}
+async function getRankFemale(success, fail) {
+  await local.get(`/rank/female`).then(success).catch(fail);
+}
+
+
+export { roomList, roomListByOption, roomTransfer, getRoom, getRankCity, getRankMale, getRankFemale };
