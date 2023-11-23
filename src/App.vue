@@ -5,8 +5,10 @@ import HeaderNav from './components/common/HeaderNav.vue';
 </script>
 
 <template>
-  <HeaderNav />
-  <RouterView />
+  <div style="display: flex;flex-direction: column;">
+    <HeaderNav />
+    <RouterView />
+  </div>
 </template>
 
 <style scoped>

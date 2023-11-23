@@ -4,29 +4,27 @@ import { ref, onMounted, watch, defineProps } from "vue";
 const props = defineProps({toggle:Boolean});
 
 // Store Import
-import {useRentStore } from '@/stores/rentStore';
-import {storeToRefs } from 'pinia';
+import { useRentStore } from "@/stores/rentStore";
+import { storeToRefs } from "pinia";
 
 // API Import
 import { getApartDealInfo } from "@/api/apart";
 
 // Component Import
+
 import VRentMap from '@/components/common/VRentMap.vue';
 import VRentSearchBar from "../components/rent/VRentSearchBar.vue";
 import RentInfoModal from "../components/rent/RentInfoModal.vue";
 
 //Store
 const rentStore = useRentStore();
-const {
-    selectedSido,
-    selectedGugun,
-    selectedDong,
-    rentRoomList,
-} = storeToRefs(rentStore);
+const { selectedSido, selectedGugun, selectedDong, rentRoomList } =
+  storeToRefs(rentStore);
 
 // const {getCurrentLocation} = houseStore;
 
 // Data
+
 
 const toggle = ref(false);
 
@@ -43,5 +41,4 @@ const toggleUpdate = (newValue) => {
     <RentInfoModal :toggle="toggle" @toggleToFalse="toggleUpdate" />
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
