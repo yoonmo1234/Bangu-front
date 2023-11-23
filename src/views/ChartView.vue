@@ -28,7 +28,7 @@ onMounted(async () => {
 				console.log("data :", data);
 				// cityLabels.value.push(...data.data);
 				// cityData.value.push(...data.labels);
-				// mostSido.value = data.label[0];
+				mostSido.value = data.labels[0];
 				const cityConfig = {
 					type: 'doughnut',
 					data: {
@@ -151,15 +151,18 @@ onMounted(async () => {
 	<section id="section-custom">
 		<div class="chart-container">
 			<div>
-				<h3 style="color:aliceblue">최다 양도 지역</h3>
+				<h3 style="color:aliceblue;text-align: center;">전국 최다 양도 지역</h3>
+				<br>
 				<canvas id="cityChart"></canvas>
 			</div>
 			<div>
-				<h3 style="color:aliceblue">{{ mostSido }} 여성 인기 동</h3>
+				<h3 style="color:aliceblue;text-align: center;">{{ mostSido }} 여성 양도</h3>
+				<br>
 				<canvas id="maleChart"></canvas>
 			</div>
 			<div>
-				<h3 style="color:aliceblue">남성 양도 지역</h3>
+				<h3 style="color:aliceblue;text-align: center;">{{mostSido}} 남성 양도</h3>
+				<br>
 				<canvas id="femaleChart"></canvas>
 			</div>
 		</div>
