@@ -1,6 +1,5 @@
 <script setup>
-import { ref, watch, computed, } from "vue";
-import RoomDetailModal from "./RoomDetailModal.vue";
+import { ref, watch, computed } from "vue";
 import { useRentStore } from "@/stores/rentStore";
 import { storeToRefs } from "pinia";
 import { useRoomStore } from "@/stores/roomStore";
@@ -66,8 +65,13 @@ const viewDetail = async (roomId) => {
                 
               </button> -->
               <!-- <span class="detail-btn"> -->
-              <RouterLink class="detail-btn" @click="viewDetail" :to="{name: 'roomDetail', params:{roomId: item['id']}}">상세보기</RouterLink>
-            <!-- </span> -->
+              <RouterLink
+                class="detail-btn"
+                @click="viewDetail"
+                :to="{ name: 'roomDetail', params: { roomId: item['id'] } }"
+                >상세보기</RouterLink
+              >
+              <!-- </span> -->
             </div>
             <div class="error-prompt-wrap">
               <ul class="error-prompt-list" role="list">

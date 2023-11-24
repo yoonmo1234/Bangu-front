@@ -1,8 +1,12 @@
 <script setup>
-import { ref, onMounted,} from "vue";
+import { ref, onMounted } from "vue";
 import { useRoomStore } from "@/stores/roomStore";
 import { storeToRefs } from "pinia";
 import { useRoute } from "vue-router";
+import { jwtDecode } from "jwt-decode";
+import { sendMail } from "@/api/mail";
+
+import { httpStatusCode } from "@/util/http-status";
 // const props = defineProps({ roomId: Number });
 const route = useRoute();
 const roomStore = useRoomStore();
@@ -18,15 +22,31 @@ const optionStatus = ref([
   false,
   false,
   false,
-  false
+  false,
 ]);
 const registerTransfer = () => {
   alert("신청하시겠습니까?");
+  let token = sessionStorage.getItem("accessToken");
+  let decodeToken = jwtDecode(token);
+  const info = { roomId: roomInfo.value.id, userId: decodeToken.userId };
+  sendMail(
+    info,
+    (response) => {
+      if (response.status === httpStatusCode.OK) {
+        alert("매일 발송이 완료되었습니다.");
+      } else {
+        alert("매일 발송에 실패하셨습니다.");
+      }
+    },
+    (error) => {
+      console.error(error);
+    }
+  );
 };
 
-onMounted(async() => {
+onMounted(async () => {
   await getRoomInfo(route.params.roomId);
-  roomInfo.value.options.forEach(element => {
+  roomInfo.value.options.forEach((element) => {
     optionStatus.value[element] = true;
   });
   if (window.kakao && window.kakao.maps) {
@@ -101,8 +121,12 @@ const initMap = () => {
         </div>
         <div class="gender">
           <h3>부가 정보</h3>
-          <p v-show="roomInfo.gender == 1"><strong>임차인이 여성입니다. 여성 거주를 추천합니다.</strong></p>
-          <p v-show="roomInfo.gender == 0"><strong>임차인이 남성입니다. 남성 거주를 추천합니다.</strong></p>
+          <p v-show="roomInfo.gender == 1">
+            <strong>임차인이 여성입니다. 여성 거주를 추천합니다.</strong>
+          </p>
+          <p v-show="roomInfo.gender == 0">
+            <strong>임차인이 남성입니다. 남성 거주를 추천합니다.</strong>
+          </p>
         </div>
       </div>
       <div>
@@ -114,7 +138,7 @@ const initMap = () => {
 
 <style scoped>
 .gender,
-.deposit{
+.deposit {
   font-size: large;
 }
 .closebtn {
