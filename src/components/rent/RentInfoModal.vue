@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch, computed, defineProps, defineEmits } from "vue";
+import { ref, watch, computed, } from "vue";
 import RoomDetailModal from "./RoomDetailModal.vue";
 import { useRentStore } from "@/stores/rentStore";
 import { storeToRefs } from "pinia";
@@ -128,9 +128,10 @@ const viewDetail = async (roomId) => {
   color: white;
   position: absolute;
   top: 0;
-  right: 430px;
+  right: 433px;
   font-size: 30px;
   margin-left: 50px;
+  background-color: #5c546b;
 }
 
 .card {

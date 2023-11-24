@@ -104,12 +104,13 @@ function closeNav() {
 }
 
 .sidenav .closebtn {
-    color: white;
-    position: absolute;
-    top: 0;
-    right: 430px;
-    font-size: 30px;
-    margin-left: 50px;
+  color: white;
+  position: absolute;
+  top: 0;
+  right: 433px;
+  font-size: 30px;
+  margin-left: 50px;
+  background-color: #5c546b;
 }
 
 .card {

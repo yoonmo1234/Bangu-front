@@ -1,6 +1,6 @@
 
 <script setup>
-import { ref, onMounted, defineEmits, defineProps} from 'vue';
+import { ref, onMounted,} from 'vue';
 
 // Store Import
 import { storeToRefs } from 'pinia';

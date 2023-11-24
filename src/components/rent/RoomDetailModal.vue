@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, defineProps, defineEmits } from "vue";
+import { ref, onMounted,} from "vue";
 import { useRoomStore } from "@/stores/roomStore";
 import { storeToRefs } from "pinia";
 import { useRoute } from "vue-router";
