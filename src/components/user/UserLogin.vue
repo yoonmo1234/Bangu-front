@@ -46,7 +46,7 @@ const signUp = async () => {
   console.log(newUser);
 
   await signUpUser(newUser.value);
-  router.push({ name: "UserLogin" });
+  router.push({ name: "index" });
 };
 
 onMounted(() => {

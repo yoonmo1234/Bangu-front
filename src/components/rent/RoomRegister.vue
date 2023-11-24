@@ -137,6 +137,7 @@ const initMap = () => {
               name="comment"
               rows="4"
               v-model="roomInfo.comment"
+              style="color:black"
               required></textarea>
           </div>
           <div class="form-group">
